@@ -122,7 +122,7 @@ function _create_taxonomy_terms_years() {
 function _create_taxonomy_terms_regions() {
   $vocab = taxonomy_vocabulary_machine_name_load('regions');
   if($vocab){
-    $regions_str = "AR Krym,Vinnyts'ka,Volyns'ka,Dnipropetrovs'ka,Donets'ka,Zhytomyrs'ka,Zakarpats'ka,Zaporiz'ka,Ivano-Frankivs'ka,Kyivs'ka,Kirovohrads'ka,Luhans'ka,L'vivs'ka,Mykolaivs'ka,Odes'ka,Poltavs'ka,Rivnens'ka,Sums'ka,Ternopil's'ka,Kharkivs'ka,Khersons'ka,Khmel'nyts'ka,Cherkas'ka,Chernivets'ka,Chernihivs'ka";
+    $regions_str = "AR Krym,Vinnyts'ka,Volyns'ka,Dnipropetrovs'ka,Donets'ka,Zhytomyrs'ka,Zakarpats'ka,Zaporiz'ka,Ivano-Frankivs'ka,Kyivs'ka,Kirovohrads'ka,Luhans'ka,L'vivs'ka,Mykolaivs'ka,Odes'ka,Poltavs'ka,Rivnens'ka,Sums'ka,Ternopil's'ka,Kharkivs'ka,Khersons'ka,Khmel'nyts'ka,Cherkas'ka,Chernivets'ka,Chernihivs'ka, Ukraine";
     $regions = explode(",", $regions_str);
     foreach($regions as $year) {
       $term = (object) array(
