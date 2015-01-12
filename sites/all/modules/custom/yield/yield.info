@@ -1,0 +1,4 @@
+name = Yield Module
+description = Own Yield Module
+core = 7.x
+version = "7.x-1.x-dev"

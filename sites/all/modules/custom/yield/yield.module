@@ -1,0 +1,137 @@
+<?php
+/**
+ * @file: Install and uninstall hooks and functions.
+ */
+ 
+/**
+ * Implements hook_install().
+ */
+function yield_install() {
+   
+  // Build an array of taxonomy vocs to save.
+  $vocabularies = _yield_build_voc_array();
+ 
+  // And process the array.
+  foreach ($vocabularies as $vocabulary) {
+    _yield_create_tax_voc($vocabulary);    
+  }
+   _create_taxonomy_terms_years();
+   _create_taxonomy_terms_regions();
+}
+ 
+/**
+ * Implements hook_uninstall().
+ */
+function yield_uninstall() {
+ 
+  // Build an array of taxonomy vocs to save.
+  $vocabularies = _yield_build_voc_array();
+   
+  // And process the array.
+  foreach ($vocabularies as $vocabulary) {    
+    _yield_delete_tax_voc($vocabulary);
+  }
+   
+}
+ 
+/**
+ *  Build an array containing arrays of vocabulary 
+ *  'machine_name' and 'name' key value pairs.
+ *  
+ * @return array
+ */
+function _yield_build_voc_array() {
+  return array(
+    array(
+      'machine_name' => 'years',
+      'name' => 'Years',
+    ),
+    array(
+      'machine_name' => 'regions',
+      'name' => 'Regions',
+    ),
+  );
+}
+ 
+/**
+ * Create a taxonomy vocabulary.
+ * @param array $vocabulary
+ *  An array containing arrays of vocabulary 
+ *  'machine_name' and 'name' key value pairs.
+ */
+function _yield_create_tax_voc($vocabulary) {
+   
+  $vid = db_query("SELECT vid FROM {taxonomy_vocabulary} WHERE machine_name = :name", array(':name' => $vocabulary['machine_name']))->fetchField();
+   
+  if (!$vid) {
+    // Save the vocabulary if it doesn't exist.
+    taxonomy_vocabulary_save((object) array(
+      'name' => $vocabulary['name'],
+      'machine_name' => $vocabulary['machine_name'],
+    ));
+   
+    // Save the vocabulary Id for later.
+    // As taxonomy term save returns a save status, we need another query to collect the vid.
+    variable_set(
+      $vocabulary['machine_name'] . '_vid',
+      db_query("SELECT vid FROM {taxonomy_vocabulary} WHERE machine_name = :name", array(':name' => $vocabulary['machine_name']))->fetchField()
+    );
+     
+    if(module_exists('dblog')) 
+      watchdog('taxonomy', 'Taxonomy @name created', array('@name' => $vocabulary['name']));
+  }
+   
+}
+ 
+/**
+ * Delete a taxonomy vocabulary and its related variable.
+ * @param array $vocabulary
+ *  An array containing arrays of vocabulary 
+ *  'machine_name' and 'name' key value pairs.
+ */
+function _yield_delete_tax_voc($vocabulary) {
+ 
+  $variable = $vocabulary['machine_name'] . '_vid';
+  $vid = variable_get($variable, null);
+   
+  if($vid) {
+    taxonomy_vocabulary_delete($vid);
+    variable_del($variable);
+     
+    if(module_exists('dblog'))
+      watchdog('taxonomy', 'Taxonomy @name deleted', array('@name' => $vocabulary['name']));
+  }
+   
+}
+
+function _create_taxonomy_terms_years() {
+  $vocab = taxonomy_vocabulary_machine_name_load('years');
+  if($vocab){
+    $years = range(1991, date('Y'));
+    foreach($years as $year) {
+      $term = (object) array(
+       'name' => $year,
+       'description' => $year,
+       'vid' => $vocab->vid,
+      );
+
+      taxonomy_term_save($term); 
+    }
+  }
+}
+function _create_taxonomy_terms_regions() {
+  $vocab = taxonomy_vocabulary_machine_name_load('regions');
+  if($vocab){
+    $regions_str = "AR Krym,Vinnyts'ka,Volyns'ka,Dnipropetrovs'ka,Donets'ka,Zhytomyrs'ka,Zakarpats'ka,Zaporiz'ka,Ivano-Frankivs'ka,Kyivs'ka,Kirovohrads'ka,Luhans'ka,L'vivs'ka,Mykolaivs'ka,Odes'ka,Poltavs'ka,Rivnens'ka,Sums'ka,Ternopil's'ka,Kharkivs'ka,Khersons'ka,Khmel'nyts'ka,Cherkas'ka,Chernivets'ka,Chernihivs'ka";
+    $regions = explode(",", $regions_str);
+    foreach($regions as $year) {
+      $term = (object) array(
+       'name' => $year,
+       'description' => $year,
+       'vid' => $vocab->vid,
+      );
+
+      taxonomy_term_save($term); 
+    }
+  }
+}
