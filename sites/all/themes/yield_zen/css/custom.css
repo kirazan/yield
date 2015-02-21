@@ -14,10 +14,14 @@
   font-family: 'Roboto-Regular', sans-serif;
 }
 
+body {
+  margin-top: -27px;
+}
+
 .header {
   width: 1200px;
   margin: 0 auto;
-  background: url(http://subtlepatterns.com/patterns/symphony.png);
+  background: url(http://subtlepatterns.com/patterns/retina_wood.png);
   height: 60px;
 }
 
@@ -38,7 +42,7 @@
 }
 
 .header ul.main-menu ul.sub-menu {
-  background: url(http://subtlepatterns.com/patterns/symphony.png);
+  background: url(http://subtlepatterns.com/patterns/retina_wood.png);
 }
 
 
