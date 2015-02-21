@@ -15,10 +15,10 @@
     <div class="image-box-wrapp">
       <ul class="images">
         <li class="image">
-          <img src="<?php echo base_path().path_to_theme();?>/images/patent-left.png">
+          <a class="colorbox-inline" href="<?php echo base_path().path_to_theme();?>/images/patent-left.png"><img src="<?php echo base_path().path_to_theme();?>/images/patent-left.png"></a>
         </li>
         <li class="image">
-          <img src="<?php echo base_path().path_to_theme();?>/images/patent-right.jpg">
+          <a class="colorbox-inline" href="<?php echo base_path().path_to_theme();?>/images/patent-right.jpg"><img src="<?php echo base_path().path_to_theme();?>/images/patent-right.jpg"></a>
         </li>
       </ul>
     </div>
