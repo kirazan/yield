@@ -1,0 +1,28 @@
+/**
+ * This file should get overwritten if Method 1 is used. If Method 2 is chosen,
+ * remove this comment and start adding your styles to this file.
+ */
+
+.node-weather-form .form-item label,  .node-yield-form .form-item label {
+  margin: 0px;
+  padding: 0px;
+  color: #666;
+  font-weight: normal; 
+  font-size: 15px;
+  line-height: 25px;
+  width: 120px;
+}
+.node-yield-form  .form-item, 
+.node-weather-form .form-item-field-year-weather-und, 
+.node-weather-form .field-name-field-region-weather .field-name-field-fc-region .form-item,
+.node-weather-form .field-name-field-region-weather  .field-name-field-fc-month .form-item,
+.node-weather-form .field-name-field-region-weather  .field-name-field-temperature .form-item,
+.node-weather-form .field-name-field-region-weather  .field-name-field-rainfall .form-item
+{
+  display: inline-flex;
+}
+
+
+#field-fc-weather-values tr.draggable td {
+  display: inline-flex;
+}

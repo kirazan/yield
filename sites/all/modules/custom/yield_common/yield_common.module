@@ -1,0 +1,150 @@
+<?php
+
+/**
+ * @file
+ * Code for the inbo_common module.
+ */
+
+define('INBO_DEFAULT_THEME_NAME','yield_zen');
+define('INBO_ADMIN_THEME_NAME','Rubik');
+
+/**
+ * Implements hook_menu().
+ */
+function yield_common_menu() {
+  $items = array();
+  $items['admin/settings/yield_common'] = array(
+    'title' => 'yield_common module settings',
+    'description' => 'Description of yield_common module settings page',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('inbo_admin_settings'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'admin.settings.inc',
+    'file path' => drupal_get_path('module', 'yield_common') . '/inc',
+   );
+  return $items;
+}
+
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function yield_common_ctools_plugin_directory($module, $plugin) {
+  if (($module == 'panels' && in_array($plugin, array('layouts', 'styles'))) || ($module == 'ctools' && in_array($plugin, array('relationships', 'contexts', 'access', 'content_types')))) {
+    return 'plugins/' . $plugin;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function yield_common_theme() {
+  $theme = array();
+	
+  $base = array(
+    'path' => drupal_get_path('module', 'yield_common') . '/theme',
+    'file' => 'theme.inc',
+  );
+
+  $theme['inbo_header'] = array(
+    'variables' => array(
+      'top_header_block_left_nav_link' => NULL,
+      'top_header_block_right_lang_link' => NULL,
+      'middle_header_block_logo' => NULL,
+      'middle_header_block_region' => NULL,
+      'middle_header_block_sign_in' => NULL,
+      'middle_header_block_cart' => NULL,
+      'bottom_header_block_search' => NULL,
+      'bottom_header_block_caregories' => NULL,
+    ),
+    'template' => 'inbo-header',
+  ) + $base;  
+	
+	$theme['inbo_sidebar_left'] = array(
+    'variables' => array(
+      'categories_menu' => NULL,
+    ),
+    'template' => 'inbo-sidebar-left',
+  ) + $base;  	
+	
+  $theme['inbo_front_content'] = array(
+    'variables' => array(
+      'slides' => NULL,
+    ),
+    'template' => 'inbo-front-content',
+  ) + $base;    
+
+  $theme['inbo_bottom'] = array(
+    'variables' => array(
+      'three_views' => NULL,
+      'shops' => NULL,
+      'about_us' => NULL,
+      'last_added' => NULL,
+    ),
+    'template' => 'inbo-bottom',
+  ) + $base;    
+	
+	$theme['inbo_footer'] = array(
+    'variables' => array(
+    'footer_top_for_shops' => NULL,
+    'footer_top_for_buyers' => NULL,
+    'footer_top_contacts' => NULL,
+    'footer_top_info' => NULL,
+    'footer_top' => NULL,
+
+    'footer_bottom' => NULL,
+    ),
+    'template' => 'inbo-footer',
+  ) + $base;
+  $theme['inbo_node_similar'] = array(
+    'variables' => array(
+    'node_similar' => NULL,
+    ),
+    'template' => 'inbo-node-similar',
+  ) + $base;
+  $theme['yield_front_main'] = array(
+    'variables' => array(
+    'front_main' => NULL,
+    ),
+    'template' => 'yield-front-main',
+  ) + $base;
+  $theme['yield_front_article'] = array(
+    'variables' => array(
+    'front_article' => NULL,
+    ),
+    'template' => 'yield-front-article',
+  ) + $base;
+  $theme['yield_front_patent'] = array(
+    'variables' => array(
+    'front_patent' => NULL,
+    ),
+    'template' => 'yield-front-patent',
+  ) + $base;
+  $theme['yield_master_footer'] = array(
+    'variables' => array(
+    'master-footer' => NULL,
+    ),
+    'template' => 'yield-master-footer',
+  ) + $base;
+  
+  return $theme;
+}
+
+/**
+ * Implements hook_custom_theme().
+ */
+function yield_common_custom_theme() {
+  $custom_theme = NULL;
+  $args = arg();
+  if ($args[0] == 'admin') {
+    $custom_theme = INBO_ADMIN_THEME_NAME;
+  }
+	else {
+	  $custom_theme = INBO_DEFAULT_THEME_NAME;
+    return array($custom_theme);
+	}
+  return array($custom_theme);
+}
+
+

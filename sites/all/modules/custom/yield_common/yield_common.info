@@ -1,0 +1,9 @@
+core = "7.x"
+name = "yield_common"
+description = "Custom yield_common customization module"
+package = "YIELD"
+project = "yield_common"
+version = "7.x-0.1"
+
+stylesheets[all][] = css/yield_common.css
+scripts[] = 'js/yield_common.js'
