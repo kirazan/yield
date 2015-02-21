@@ -23,10 +23,36 @@ body {
   margin-top: -27px;
 }
 
+.fixed-menu {
+  -webkit-transition: all 1s ease-out 0.5s;
+  -moz-transition: all 1s ease-out 0.5s;
+  -o-transition: all 1s ease-out 0.5s;
+  transition: all 1s ease-out 0.5s;
+}
+
+.fixed-menu .header {
+  position: fixed;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  z-index: 10000;
+  top: 0;
+  -webkit-transition: all 1s ease-out 0.5s;
+  -moz-transition: all 1s ease-out 0.5s;
+  -o-transition: all 1s ease-out 0.5s;
+  transition: all 1s ease-out 0.5s;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.85);
+  -moz-box-shadow:    0px 0px 15px 0px rgba(50, 50, 50, 0.85);
+  box-shadow:         0px 0px 15px 0px rgba(50, 50, 50, 0.85);
+}
+
+.fixed-menu .header ul {
+  margin: 0;
+}
+
 .header {
   width: 100%;
-  background: #009156;
-  /*background: url(http://subtlepatterns.com/patterns/retina_wood.png);*/
+  background: url(http://subtlepatterns.com/patterns/wall4.png);
   z-index: 2;
 }
 
@@ -47,6 +73,64 @@ body {
   text-decoration: none;
   text-transform: uppercase;
 }
+.header ul.main-menu li a.map:before {
+  content: url(../images/map.png);
+  display: block;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  left: 36px;
+  top: 10%;
+  opacity: 0.8;
+}
+
+.header ul.main-menu li a.cal:before {
+  content: url(../images/cal.png);
+  display: block;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  left: 36px;
+  top: 10%;
+}
+
+.header ul.main-menu>li>a#graph:before {
+  content: url(../images/graph.png);
+  display: block;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  left: 30px;
+  top: 16%;
+}
+
+.header ul.main-menu>li>a#graph:after {
+  content: url(../images/arrow.png);
+  display: block;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 40px;
+  top: 16%;
+  opacity: 0.6;
+}
+
+.header ul.main-menu li a.front:before {
+  content: url(../images/front.png);
+  display: block;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  left: 30px;
+  top: 16%;
+}sub-menu
+
+ul.sub-menu #menu-item-593 a:before {
+  content: url(../images/front.png);
+  display: block;
+  width: 24px;
+  height: 24px;
+}
 
 .header ul.main-menu>li a{
   color: #2c3e50;
@@ -55,17 +139,18 @@ body {
   text-transform: uppercase;
 }
 
+.header ul.main-menu>li a.active,
 .header ul.main-menu>li a:hover {
-  color: #c0392b;
+  color: #27ae60;
 }
 
 .header ul.main-menu ul.sub-menu {
-  background: url(http://subtlepatterns.com/patterns/retina_wood.png);
+  background: url(http://subtlepatterns.com/patterns/wall4.png);
 }
 
 
 .header ul.main-menu ul.sub-menu li {
-  padding: 0 120px 0 10px;
+  padding: 0 100px 0 25px;
 }
 
 .front-main-container .front-main-mouse {
@@ -113,12 +198,53 @@ body {
   height: 670px;
 }
 
+.front-article-container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.front-article-container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.front-article-container .left,
+.front-article-container .right {
+  width: 45%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.front-article-container .left {
+  padding-top: 30px;
+}
+
+.front-article-container .right {
+  padding: 20px 40px;
+  margin: 40px 10px 40px 20px;
+  background: #fff;
+  font-size: 12px;
+  border-radius: 2px;
+  text-align: justify;
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(50, 50, 50, 1);
+  -moz-box-shadow:    0px 0px 20px 0px rgba(50, 50, 50, 1);
+  box-shadow:         0px 0px 20px 0px rgba(50, 50, 50, 1);
+}
+
+.front-article-container .right .tab {
+  text-indent: 15px;
+}
+
+.front-article-container .right p {
+  line-height: 18px;
+}
+
 .front-patent-container,
-.front-article-container,
 .front-main-container {
   width: 1200px;
   margin: 0 auto;
   text-align: center;
+  padding-top: 100px;
 }
 
 .master_footer {
@@ -126,11 +252,10 @@ body {
   margin: 0 auto;
 }
 
-.front-main-container .front-main-first {
+.front-main-container .front-main-first p {
   font-family: 'Bebas';
   font-size: 28px;
   color: #34495e;
-  padding-top: 200px;
 }
 
 .front-main-container .front-main-second {
@@ -140,12 +265,16 @@ body {
 
 .pane-yield-front-article {
   background: #78BF9E;
-  height: 670px;
+  height: auto;
 }
 
 .pane-yield-front-patent {
   background: #B8D9CA;
   height: 670px;
+}
+
+.pane-yield-front-patent .theme {
+  margin-bottom: 90px;
 }
 
 .pane-yield-front-patent .front-patent-container ul.images {
@@ -157,14 +286,18 @@ body {
   padding: 0 30px;
 }
 
+.pane-yield-front-patent .front-patent-container ul.images li img {
+  cursor:zoom-in;
+}
+
 .pane-yield-master-footer {
   background: #F2F2F2;
+  margin-bottom: -27px;
 }
 
 .pane-yield-master-footer .master_footer {
   height: 80px;
   line-height: 80px;
-  margin-bottom: -27px;
 }
 
 .pane-yield-master-footer .master_footer .footer_left {

@@ -17,6 +17,19 @@
 Drupal.behaviors.my_custom_behavior = {
   attach: function(context, settings) {
 
+    $(window).scroll(function(){
+        if ($(this).scrollTop() > 80){
+          $('body').addClass('fixed-menu');
+        }
+        else {
+          if ($('body').hasClass('fixed-menu')) {
+            $('body').removeClass('fixed-menu');  
+          }
+          
+        }
+    });  
+
+
   }
 };
 
