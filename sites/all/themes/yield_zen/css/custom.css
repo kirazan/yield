@@ -25,7 +25,8 @@ body {
 
 .header {
   width: 100%;
-  background: url(http://subtlepatterns.com/patterns/retina_wood.png);
+  background: #009156;
+  /*background: url(http://subtlepatterns.com/patterns/retina_wood.png);*/
   z-index: 2;
 }
 
@@ -70,13 +71,12 @@ body {
 .front-main-container .front-main-mouse {
   border: 2px solid #fff;
   border-radius: 26px;
-  position: absolute;
-  top: 80%;
-  left: 50%;
   width: 26px;
+  margin: 0 auto;
   height: 42px;
   -webkit-backface-visibility: hidden;
-  transform: translate(-50%, -50%);
+  transform: translate(0%, 0%);
+  margin-top: 15%;
 }
 .front-main-container .front-main-mouse:after {
     background-color: #fff;
@@ -108,19 +108,69 @@ body {
 }
 
 .pane-yield-front-main {
-  background: #78BF9E;
+  background: #41A677;
+  /*background: #78BF9E;*/
   height: 670px;
 }
 
+.front-patent-container,
+.front-article-container,
 .front-main-container {
   width: 1200px;
   margin: 0 auto;
   text-align: center;
 }
 
+.master_footer {
+  width: 1200px;
+  margin: 0 auto;
+}
+
 .front-main-container .front-main-first {
   font-family: 'Bebas';
   font-size: 28px;
   color: #34495e;
-  padding-top: 100px;
+  padding-top: 200px;
+}
+
+.front-main-container .front-main-second {
+  line-height: 100px;
+  color: #2c3e50;
+}
+
+.pane-yield-front-article {
+  background: #78BF9E;
+  height: 670px;
+}
+
+.pane-yield-front-patent {
+  background: #B8D9CA;
+  height: 670px;
+}
+
+.pane-yield-front-patent .front-patent-container ul.images {
+  list-style: none;
+}
+
+.pane-yield-front-patent .front-patent-container ul.images li {
+  display: inline;
+  padding: 0 30px;
+}
+
+.pane-yield-master-footer {
+  background: #F2F2F2;
+}
+
+.pane-yield-master-footer .master_footer {
+  height: 80px;
+  line-height: 80px;
+  margin-bottom: -27px;
+}
+
+.pane-yield-master-footer .master_footer .footer_left {
+  float: left;
+}
+
+.pane-yield-master-footer .master_footer .footer_right {
+  float: right;
 }
