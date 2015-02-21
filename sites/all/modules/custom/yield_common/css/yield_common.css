@@ -1,0 +1,43 @@
+.search-form .form-text {
+	float: left;
+	width: 134px;
+	height: 18px;
+	border: 1px solid #b9d1dc;
+	border: 1px solid rgba(185,209,220,0.75);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 6px 31px 7px 12px;
+	-webkit-box-shadow: 0 1px 1px #fff;
+	-moz-box-shadow: 0 1px 1px #fff;
+	box-shadow: 0 1px 1px #fff;
+	background: url(../img/bg_header_search_text.png) 0 0 repeat-x;
+	font: 15px/18px 'TrebuchetRegular', sans-serif;
+	color: #bbbebf;
+	text-shadow: 0 1px #fff;
+}
+
+.search-form .form-text:focus {
+	color: #000;
+}
+
+.search-form input[type="submit"] {
+	cursor: pointer;
+	float: left;
+	width: 27px;
+	height: 27px;
+	margin: 3px 0 0 -30px;
+	border: 0 none;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background: #c5d8e1 url(../img/ico_header_search_btn.png) 50% 50% no-repeat;
+	text-indent: -9000px;
+}
+
+#edit-field-coupons-und .form-item,
+#edit-field-billing-period-und .form-item,
+#edit-field-location-und .form-item,
+#edit-field-category-und .form-item{
+	display:inline-block;
+}
