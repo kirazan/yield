@@ -7,10 +7,10 @@
 ?>
 <div class="front-main-container">
   <div class="front-main-first">
-    NAME
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.    
   </div>
   <div class="front-main-second">
-    THEME
+    <?php print t("Master diploma"); ?>
   </div>
   <div class="front-main-mouse"></div>
 </div>
