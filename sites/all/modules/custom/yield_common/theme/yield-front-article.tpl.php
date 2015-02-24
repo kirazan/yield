@@ -8,10 +8,12 @@
 <div class="front-article-container">  
   <div class="left">
     <div class="theme">
-      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+      Міжнародна наукова конференція <br>
+      "СУЧАСНІ ПРОБЛЕМИ МАТЕМАТИЧНОГО МОДЕЛЮВАННЯ ТА ОБЧИСЛЮВАЛЬНИХ МЕТОДІВ"<br>
+      
     </div>
     <div class="author">
-      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+      19 - 22 лютого 2015 року
     </div>
   </div>
   <div class="right">
