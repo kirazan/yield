@@ -18,7 +18,7 @@ Drupal.behaviors.my_custom_behavior = {
   attach: function(context, settings) {
 
     $(window).scroll(function(){
-        if ($(this).scrollTop() > 80){
+        if ($(this).scrollTop() > 0){
           $('body').addClass('fixed-menu');
         }
         else {
