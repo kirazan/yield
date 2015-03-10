@@ -29,6 +29,12 @@ Drupal.behaviors.my_custom_behavior = {
         }
     });  
 
+    $(document).ready(function() {
+      $('#graph').click(function(e) {
+        return false;
+      }); 
+      
+    }); 
 
   }
 };

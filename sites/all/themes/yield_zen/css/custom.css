@@ -305,3 +305,40 @@ ul.sub-menu #menu-item-593 a:before {
 .pane-yield-master-footer .master_footer .footer_right {
   float: right;
 }
+
+.ukraine-map-svg {
+  width: 620px;
+  height: 420px;
+}
+
+.ukraine-map-svg-wrapp {
+  margin-left: 90px;
+  margin-top: 30px;
+  position: relative;
+}
+
+.ukraine-map-svg-wrapp .yiled-on-map {
+  font-size: 15px;
+  text-shadow: -1px -1px 0px rgba(150, 150, 150, 0.72);
+}
+
+#map-ukraine-slider {
+  height: 500px;
+  width: 800px;
+  margin: 0 auto;
+  margin-bottom: 100px;
+}
+
+.view-header {
+  text-align: center;
+  font-size: 17px;
+  color: #323232;
+}
+
+.ukraine-map-svg-wrapp .map-year {
+  font-size: 90px;
+  position: absolute;
+  top: 333px;
+  color: #666;
+  left: -46px;
+}

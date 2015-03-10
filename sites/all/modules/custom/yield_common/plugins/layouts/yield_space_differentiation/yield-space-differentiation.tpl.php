@@ -12,8 +12,10 @@
  *   $content['middle']: The only panel in the layout.
  */
 ?>
+
 <div class="panel-display panel-1col clearfix" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
   <div class="panel-panel panel-col">
+    <h1><?php print t("Yield space differentiation"); ?></h1>
     <div class="main_slider"><?php print $content['main_slider']; ?></div>
   </div>
 </div>
