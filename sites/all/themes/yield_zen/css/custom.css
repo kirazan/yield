@@ -23,6 +23,9 @@ body {
   margin-top: -27px;
 }
 
+h1 {
+  margin: 10px;
+}
 .fixed-menu {
   -webkit-transition: all 1s ease-out 0.5s;
   -moz-transition: all 1s ease-out 0.5s;
@@ -48,7 +51,7 @@ body {
 
 .header {
   width: 100%;
-  background: url(http://subtlepatterns.com/patterns/wall4.png);
+  background: url(../images/back_menu.png);
   z-index: 2;
 }
 
@@ -141,7 +144,7 @@ ul.sub-menu #menu-item-593 a:before {
 }
 
 .header ul.main-menu ul.sub-menu {
-  background: url(http://subtlepatterns.com/patterns/wall4.png);
+  background: url(../images/back_menu.png);
 }
 
 
@@ -341,4 +344,17 @@ ul.sub-menu #menu-item-593 a:before {
   top: 333px;
   color: #666;
   left: -46px;
+}
+
+.big-map-ukraine {
+  width: 1200px;
+  margin: 20px auto;
+}
+
+.tooltip-show {
+  position: absolute;
+  width: auto;
+  height: 30px;
+  border: 2px solid black;
+  padding: 5px;
 }

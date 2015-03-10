@@ -23,18 +23,36 @@ Drupal.behaviors.my_custom_behavior = {
         }
         else {
           if ($('body').hasClass('fixed-menu')) {
-            $('body').removeClass('fixed-menu');  
+            $('body').removeClass('fixed-menu');
           }
-          
+
         }
-    });  
+    });
 
     $(document).ready(function() {
+      $('.tooltip-show').hide();
+      $( ".land" ).mouseover(function(event) {
+        $(this).mousemove(function( event ) {
+          $('.tooltip-show').css({'top':event.pageY-50,'left':event.pageX-50, 'position':'absolute', 'border':'1px solid black', 'padding':'5px'});
+          $('.tooltip-show').show();
+
+        });
+        $('.tooltip-show').append($(this).attr("title"));
+      });
+      $('.land').mouseout(function() {
+            $('.tooltip-show').hide();
+            $('.tooltip-show').empty();
+      });
+      $('.land').click(function() {
+        alert($(this).attr("id"));
+      });
+
       $('#graph').click(function(e) {
         return false;
-      }); 
-      
-    }); 
+      });
+
+    });
+
 
   }
 };
