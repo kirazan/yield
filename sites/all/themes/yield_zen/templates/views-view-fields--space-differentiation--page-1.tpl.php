@@ -26,11 +26,11 @@
 ?>
 
 
-<?php 
+<?php
   $year = $row->field_field_year[0]['raw']['taxonomy_term']->name;
   $yield = array();
   $yield['field_field_ar_krym'] = $row->field_field_ar_krym[0]['raw']['value'];
-  $yield['field_field_cherkas_ka'] = $row->field_field_cherkas_ka[0]['raw']['value'];  
+  $yield['field_field_cherkas_ka'] = $row->field_field_cherkas_ka[0]['raw']['value'];
   $yield['field_field_chernihivs_ka'] = $row->field_field_chernihivs_ka[0]['raw']['value'];
   $yield['field_field_chernivets_ka'] = $row->field_field_chernivets_ka[0]['raw']['value'];
   $yield['field_field_dnipropetrovs_ka'] = $row->field_field_dnipropetrovs_ka[0]['raw']['value'];
@@ -59,20 +59,39 @@
   $diff = $max - $min;
   $section = $diff / 5;
   $sec1 = $min + $section;
+  $range1 = range($min, $sec1);
   $sec2 = $sec1 + $section;
+  $range2 = range($sec1, $sec2);
   $sec3 = $sec2 + $section;
+  $range3 = range($sec2, $sec3);
   $sec4 = $sec3 + $section;
-
-/*
-background: #075807
-background: #097609
-background: #70AF1A
-background: #B9D40B
-background: #E5EB0B
-*/
-  //print_r($round);
-
+  $range4 = range($sec3, $sec4);
+  $range5 = range($sec4, $max);
+ foreach ($yield as $key => $value) {
+    if(in_array($value, $range1)){
+      $mass[$key]['color'] = '#075807';
+      $mass[$key]['value'] = $value;
+    }
+    if(in_array($value, $range2)){
+      $mass[$key]['color'] = '#097609';
+      $mass[$key]['value'] = $value;
+    }
+    if(in_array($value, $range3)){
+      $mass[$key]['color'] = '#70AF1A';
+      $mass[$key]['value'] = $value;
+    }
+    if(in_array($value, $range4)){
+      $mass[$key]['color'] = '#B9D40Bd';
+      $mass[$key]['value'] = $value;
+    }
+    if(in_array($value, $range5)){
+      $mass[$key]['color'] = '#E5EB0B';
+      $mass[$key]['value'] = $value;
+    }
+ }
+  $map = create_svg_ukraine_map();
 ?>
+<?php print $map; ?>
 <?php print '<pre>'; print_r($year); print '</pre>'; ?>
 <?php print '<pre>'; print_r($yield); print '</pre>'; ?>
 <!--
