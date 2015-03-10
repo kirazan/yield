@@ -41,7 +41,7 @@ function yield_common_ctools_plugin_directory($module, $plugin) {
  */
 function yield_common_theme() {
   $theme = array();
-	
+
   $base = array(
     'path' => drupal_get_path('module', 'yield_common') . '/theme',
     'file' => 'theme.inc',
@@ -59,21 +59,21 @@ function yield_common_theme() {
       'bottom_header_block_caregories' => NULL,
     ),
     'template' => 'inbo-header',
-  ) + $base;  
-	
+  ) + $base;
+
 	$theme['inbo_sidebar_left'] = array(
     'variables' => array(
       'categories_menu' => NULL,
     ),
     'template' => 'inbo-sidebar-left',
-  ) + $base;  	
-	
+  ) + $base;
+
   $theme['inbo_front_content'] = array(
     'variables' => array(
       'slides' => NULL,
     ),
     'template' => 'inbo-front-content',
-  ) + $base;    
+  ) + $base;
 
   $theme['inbo_bottom'] = array(
     'variables' => array(
@@ -83,8 +83,8 @@ function yield_common_theme() {
       'last_added' => NULL,
     ),
     'template' => 'inbo-bottom',
-  ) + $base;    
-	
+  ) + $base;
+
 	$theme['inbo_footer'] = array(
     'variables' => array(
     'footer_top_for_shops' => NULL,
@@ -127,7 +127,13 @@ function yield_common_theme() {
     ),
     'template' => 'yield-master-footer',
   ) + $base;
-  
+  $theme['yield_map_render'] = array(
+    'variables' => array(
+    'map-render' => NULL,
+    ),
+    'template' => 'yield-map-render',
+  ) + $base;
+
   return $theme;
 }
 
