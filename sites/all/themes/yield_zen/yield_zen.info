@@ -68,6 +68,8 @@ stylesheets[all][] = css/custom.css
 ; Optionally add some JavaScripts to your theme.
 
 scripts[] = js/script.js
+scripts[] = js/jquery.color-2.1.0.js
+scripts[] = js/raphael-min.js
 
 
 

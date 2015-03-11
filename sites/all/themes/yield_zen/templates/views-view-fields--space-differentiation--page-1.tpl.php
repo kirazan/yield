@@ -60,36 +60,31 @@
   $section = $diff / 5;
   $section = ceil($section);
   $sec1 = $min + $section;
-  $range1 = range($min, $sec1);
   $sec2 = $sec1 + $section;
-  $range2 = range($sec1, $sec2);
   $sec3 = $sec2 + $section;
-  $range3 = range($sec2, $sec3);
   $sec4 = $sec3 + $section;
-  $range4 = range($sec3, $sec4);
-  $range5 = range($sec4, $max);
  foreach ($yield as $key => $value) {
-    if(in_array($value, $range1)){
+    if($value >= $min && $value <= $sec1){
       $mass[$key]['color'] = '#E5EB0B';
       $mass[$key]['value'] = $value;
     }
-    if(in_array($value, $range2)){
+    if($value > $sec1 && $value <= $sec2){
       $mass[$key]['color'] = '#B9D40B';
       $mass[$key]['value'] = $value;
     }
-    if(in_array($value, $range3)){
+    if($value > $sec2 && $value <= $sec3){
       $mass[$key]['color'] = '#70AF1A';
       $mass[$key]['value'] = $value;
     }
-    if(in_array($value, $range4)){
+    if($value > $sec3 && $value <= $sec4){
       $mass[$key]['color'] = '#097609';
       $mass[$key]['value'] = $value;
     }
-    if(in_array($value, $range5)){
+    if($value > $sec4 && $value <= $max){
       $mass[$key]['color'] = '#075807';
       $mass[$key]['value'] = $value;
     }
-  } 
+  }
   $map = create_svg_ukraine_map($mass);
 ?>
 <div class="ukraine-map-svg-wrapp">
