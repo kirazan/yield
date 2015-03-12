@@ -14,8 +14,12 @@
 ?>
 <div class="panel-display panel-1col clearfix" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
   <div class="panel-panel panel-col">
-    <div class="header"><?php print $content['header']; ?></div>
-    <div class="main_content"><?php print $content['main_content']; ?></div>
+    <div class="page-wrapper">
+      <div class="header"><?php print $content['header']; ?></div>
+      <div class="main_content"><?php print $content['main_content']; ?></div>
+      <div class="page-buffer"></div>
+    </div>
     <div class="footer"><?php print $content['footer']; ?></div>
   </div>
 </div>
+

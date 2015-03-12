@@ -13,6 +13,11 @@
   src: url("../fonts/BebasNeue-Bold.otf");
 }
 
+@font-face {
+  font-family: 'Lato-Light';
+  src: url("../fonts/lato-lig-webfont.ttf");
+}
+
 *, body, div {
   margin: 0;
   padding: 0;
@@ -26,6 +31,8 @@ body {
 h1 {
   margin: 10px;
 }
+
+
 .fixed-menu {
   -webkit-transition: all 1s ease-out 0.5s;
   -moz-transition: all 1s ease-out 0.5s;
@@ -251,8 +258,9 @@ ul.sub-menu #menu-item-593 a:before {
   margin: 0 auto;
 }
 
+
 .front-main-container .front-main-first p {
-  font-family: 'Bebas';
+  font-family: 'Roboto-Light';
   font-size: 28px;
   color: #34495e;
 }
@@ -348,7 +356,7 @@ ul.sub-menu #menu-item-593 a:before {
 
 .big-map-ukraine {
   width: 1200px;
-  margin: 20px auto;
+  margin: 0 auto;
 }
 
 .tooltip-show {
@@ -357,4 +365,5 @@ ul.sub-menu #menu-item-593 a:before {
   height: 30px;
   border: 2px solid black;
   padding: 5px;
+  z-index: 10;
 }
