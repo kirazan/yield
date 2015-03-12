@@ -30,6 +30,7 @@ Drupal.behaviors.my_custom_behavior = {
     });
 
     $(document).ready(function() {
+
       $('.tooltip-show').hide();
       $( ".land" ).mouseover(function(event) {
         $(this).mousemove(function( event ) {
