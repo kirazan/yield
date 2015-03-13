@@ -8,25 +8,46 @@
 <div class="big-map-ukraine">
   <div class="tooltip-show"></div>
   <?php print $map_render; ?>
-  <div id="st-container" class="st-container"> 
+  <div id="st-container" class="st-container">
 
     <nav class="st-menu st-effect-2" id="menu-2">
-      <h2 class="icon icon-stack">Sidebar</h2>
-      <ul>
-        <li><a class="icon icon-data" href="#">Data Management</a></li>
-        <li><a class="icon icon-location" href="#">Location</a></li>
-        <li><a class="icon icon-study" href="#">Study</a></li>
-        <li><a class="icon icon-photo" href="#">Collections</a></li>
-        <li><a class="icon icon-wallet" href="#">Credits</a></li>
-        <li><a class="icon icon-wallet" href="#">Credits</a></li>
-        <li><a class="icon icon-wallet" href="#">Credits</a></li>
-        <li><a class="icon icon-wallet" href="#">Credits</a></li>
-        <li><a class="icon icon-wallet" href="#">Credits</a></li>
-      </ul>
+      <table>
+        <thead>
+          <tr><th>Рік</th><th>Урожайність</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1991</td><td>43.2</td></tr>
+          <tr><td>1992</td><td>43.2</td></tr>
+          <tr><td>1993</td><td>43.2</td></tr>
+          <tr><td>1994</td><td>43.2</td></tr>
+          <tr><td>1995</td><td>43.2</td></tr>
+          <tr><td>1995</td><td>43.2</td></tr>
+          <tr><td>1996</td><td>43.2</td></tr>
+          <tr><td>1997</td><td>43.2</td></tr>
+          <tr><td>1998</td><td>43.2</td></tr>
+          <tr><td>1999</td><td>43.2</td></tr>
+          <tr><td>2000</td><td>43.2</td></tr>
+          <tr><td>2001</td><td>43.2</td></tr>
+          <tr><td>2002</td><td>43.2</td></tr>
+          <tr><td>2003</td><td>43.2</td></tr>
+          <tr><td>2004</td><td>43.2</td></tr>
+          <tr><td>2005</td><td>43.2</td></tr>
+          <tr><td>2006</td><td>43.2</td></tr>
+          <tr><td>2007</td><td>43.2</td></tr>
+          <tr><td>2008</td><td>43.2</td></tr>
+          <tr><td>2009</td><td>43.2</td></tr>
+          <tr><td>2010</td><td>43.2</td></tr>
+          <tr><td>2011</td><td>43.2</td></tr>
+          <tr><td>2012</td><td>43.2</td></tr>
+          <tr><td>2013</td><td>43.2</td></tr>
+          <tr><td>2014</td><td><a href="javascript:void(0);">ПРОГНОЗ</a></td></tr>
+        </tbody>
+      </table>
     </nav>
+
         <!-- content push wrapper -->
     <div class="st-pusher">
-      <div class="st-content"><!-- this is the wrapper for the content -->    
+      <div class="st-content"><!-- this is the wrapper for the content -->
         <svg viewBox="0 0 600 420" style="width: 1200px; height: 550px" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg" xmlns:amcharts="http://amcharts.com/ammap" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
           <defs>
             <style type="text/css">
