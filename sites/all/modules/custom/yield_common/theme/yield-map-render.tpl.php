@@ -3,11 +3,14 @@
 /**
  * @file
  * Customize the display footer.
-*/
+*/  
+  //$data = get_region_table_from_db_by_map_land_id('UA-43');
 ?>
 <div class="big-map-ukraine">
   <div class="tooltip-show"></div>
-  <?php print $map_render; ?>
+  <?php 
+    print $map_render; 
+  ?>
   <div id="st-container" class="st-container">
 
     <nav class="st-menu st-effect-2" id="menu-2">
@@ -15,32 +18,8 @@
         <thead>
           <tr><th>Рік</th><th>Урожайність</th></tr>
         </thead>
-        <tbody>
-          <tr><td>1991</td><td>43.2</td></tr>
-          <tr><td>1992</td><td>43.2</td></tr>
-          <tr><td>1993</td><td>43.2</td></tr>
-          <tr><td>1994</td><td>43.2</td></tr>
-          <tr><td>1995</td><td>43.2</td></tr>
-          <tr><td>1995</td><td>43.2</td></tr>
-          <tr><td>1996</td><td>43.2</td></tr>
-          <tr><td>1997</td><td>43.2</td></tr>
-          <tr><td>1998</td><td>43.2</td></tr>
-          <tr><td>1999</td><td>43.2</td></tr>
-          <tr><td>2000</td><td>43.2</td></tr>
-          <tr><td>2001</td><td>43.2</td></tr>
-          <tr><td>2002</td><td>43.2</td></tr>
-          <tr><td>2003</td><td>43.2</td></tr>
-          <tr><td>2004</td><td>43.2</td></tr>
-          <tr><td>2005</td><td>43.2</td></tr>
-          <tr><td>2006</td><td>43.2</td></tr>
-          <tr><td>2007</td><td>43.2</td></tr>
-          <tr><td>2008</td><td>43.2</td></tr>
-          <tr><td>2009</td><td>43.2</td></tr>
-          <tr><td>2010</td><td>43.2</td></tr>
-          <tr><td>2011</td><td>43.2</td></tr>
-          <tr><td>2012</td><td>43.2</td></tr>
-          <tr><td>2013</td><td>43.2</td></tr>
-          <tr><td>2014</td><td><a href="javascript:void(0);">ПРОГНОЗ</a></td></tr>
+        <tbody id="yield-table-body">
+          <?php //print $data; ?>
         </tbody>
       </table>
     </nav>

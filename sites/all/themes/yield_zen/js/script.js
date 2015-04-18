@@ -37,7 +37,6 @@ Drupal.behaviors.my_custom_behavior = {
           $('.tooltip-show').add();
           $('.tooltip-show').css({'top':event.pageY-50,'left':event.pageX-50, 'position':'absolute', 'border':'1px solid black', 'padding':'5px'});
           $('.tooltip-show').show();
-
         });
         $('.tooltip-show').append($(this).attr("title"));
       });
@@ -46,6 +45,15 @@ Drupal.behaviors.my_custom_behavior = {
             $('.tooltip-show').empty();
       });
       $('.land').click(function() {
+        var nid = $(this).attr('id');
+        console.log(nid);
+        $.ajax({
+            url: 'ajax/' + nid,
+            success: function(data) {
+                console.log(data);
+                $("#yield-table-body").html(data);
+            }
+        }); 
         $('.tooltip-show').hide();
         var container = document.getElementById( 'st-container' );
         $(container).addClass('st-effect-2');
@@ -69,6 +77,5 @@ Drupal.behaviors.my_custom_behavior = {
 
   }
 };
-
 
 })(jQuery, Drupal, this, this.document);
