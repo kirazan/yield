@@ -2,6 +2,16 @@
 /**
  * @file: Install and uninstall hooks and functions.
  */
+function yield_menu() {
+  $items['ajax/%'] = array(
+    'title'             => 'Ajax callback',
+    'page callback'     => 'get_region_table_from_db_by_map_land_id',
+    'page arguments'    => array(1),
+    'delivery callback' => 'ajax_deliver',
+    'access arguments'  => array('access content'),
+  );
+  return $items;
+}
 
 /**
  * Implements hook_install().
@@ -237,4 +247,143 @@ function create_svg_ukraine_map($arr) {
   </g>
 </svg>';
   return $output;
+}
+
+function get_yield_by_region($select_table, $select_field) {
+  $table = $select_table;
+  $field = $select_field;
+  $query = db_select('node', 'n');
+  $query->innerJoin($table, 'fdfr', 'n.nid = fdfr.entity_id');
+  $query->innerJoin('field_data_field_year', 'fdfy', 'n.nid = fdfy.entity_id');
+  $query->innerJoin('taxonomy_term_data', 'ttd', 'fdfy.field_year_tid =ttd.tid');
+  $query->fields('ttd', array('name'));
+  $query->addField('fdfr', $field, 'value');
+  $query->orderBy('ttd.name', 'ASC');
+  $result = $query->execute();
+  foreach ($result as $node) {
+    $arr['year'] = $node->name;
+    $arr['yield'] = $node->value;
+    $items[] = $arr;
+  }
+  return $items;
+}
+
+function get_region_table_from_db_by_map_land_id($land_id) {
+  $id = $land_id;
+  switch ($id) {
+    case 'UA-43':
+      $arr['table'] = 'field_data_field_ar_krym';
+      $arr['field'] = 'field_ar_krym_value';
+    break;
+    case 'UA-71':
+      $arr['table'] = 'field_data_field_cherkas_ka';
+      $arr['field'] = 'field_cherkas_ka_value';
+    break;
+    case 'UA-74':
+      $arr['table'] = 'field_data_field_chernihivs_ka';
+      $arr['field'] = 'field_chernihivs_ka_value';
+    break;
+    case 'UA-77':
+      $arr['table'] = 'field_data_field_chernivets_ka';
+      $arr['field'] = 'field_chernivets_ka_value';
+    break;
+    case 'UA-12':
+      $arr['table'] = 'field_data_field_dnipropetrovs_ka';
+      $arr['field'] = 'field_dnipropetrovs_ka_value';
+    break;
+    case 'UA-14':
+      $arr['table'] = 'field_data_field_donets_ka';
+      $arr['field'] = 'field_donets_ka_value';
+    break;
+    case 'UA-26':
+      $arr['table'] = 'field_data_field_ivano_frankivs_ka';
+      $arr['field'] = 'field_ivano_frankivs_ka_value';
+    break;
+    case 'UA-63':
+      $arr['table'] = 'field_data_field_kharkivs_ka';
+      $arr['field'] = 'field_kharkivs_ka_value';
+    break;
+    case 'UA-65':
+      $arr['table'] = 'field_data_field_khersons_ka';
+      $arr['field'] = 'field_khersons_ka_value';
+    break;
+    case 'UA-68':
+      $arr['table'] = 'field_data_field_khmel_nyts_ka';
+      $arr['field'] = 'field_khmel_nyts_ka_value';
+    break;
+    case 'UA-35':
+      $arr['table'] = 'field_data_field_kirovohrads_ka';
+      $arr['field'] = 'field_kirovohrads_ka_value';
+    break;
+    case 'UA-32':
+      $arr['table'] = 'field_data_field_kyivs_ka';
+      $arr['field'] = 'field_kyivs_ka_value';
+    break;
+    case 'UA-09':
+      $arr['table'] = 'field_data_field_luhans_ka';
+      $arr['field'] = 'field_luhans_ka_value';
+    break;
+    case 'UA-46':
+      $arr['table'] = 'field_data_field_l_vivs_ka';
+      $arr['field'] = 'field_l_vivs_ka_value';
+    break;
+    case 'UA-48':
+      $arr['table'] = 'field_data_field_mykolaivs_ka';
+      $arr['field'] = 'field_mykolaivs_ka_value';
+    break;
+    case 'UA-51':
+      $arr['table'] = 'field_data_field_odes_ka';
+      $arr['field'] = 'field_odes_ka_value';
+    break;
+    case 'UA-53':
+      $arr['table'] = 'field_data_field_poltavs_ka';
+      $arr['field'] = 'field_poltavs_ka_value';
+    break;
+    case 'UA-56':
+      $arr['table'] = 'field_data_field_rivnens_ka';
+      $arr['field'] = 'field_rivnens_ka_value';
+    break;
+    case 'UA-59':
+      $arr['table'] = 'field_data_field_sums_ka';
+      $arr['field'] = 'field_sums_ka_value';
+    break;
+    case 'UA-61':
+      $arr['table'] = 'field_data_field_ternopil_s_ka';
+      $arr['field'] = 'field_ternopil_s_ka_value';
+    break;
+    case 'UA-05':
+      $arr['table'] = 'field_data_field_vinnyts_ka';
+      $arr['field'] = 'field_vinnyts_ka_value';
+    break;
+    case 'UA-07':
+      $arr['table'] = 'field_data_field_volyns_ka';
+      $arr['field'] = 'field_volyns_ka_value';
+    break;
+    case 'UA-21':
+      $arr['table'] = 'field_data_field_zakarpats_ka';
+      $arr['field'] = 'field_zakarpats_ka_value';
+    break;
+    case 'UA-23':
+      $arr['table'] = 'field_data_field_zaporiz_ka';
+      $arr['field'] = 'field_zaporiz_ka_value';
+    break;
+    case 'UA-18':
+      $arr['table'] = 'field_data_field_zhytomyrs_ka';
+      $arr['field'] = 'field_zhytomyrs_ka_value';
+    break;
+    
+    default:
+      $arr['table'] = 'field_data_field_ukraine';
+      $arr['field'] = 'field_ukraine_value';
+    break;
+  }
+
+  $data = get_yield_by_region($arr['table'], $arr['field']);
+  $tbody = '';
+  foreach ($data as $key => $value) {
+   $tbody .=  '<tr><td>'.$value['year'].'</td><td>'.$value['yield'].'</td></tr>';
+  } 
+  $tbody .= '<tr><td>2014</td><td><a href="javascript:void(0);">ПРОГНОЗ</a></td></tr>';
+
+  return $tbody;
 }

@@ -1,0 +1,43 @@
+<?php 
+/**
+ * Implements hook_menu().
+ */
+function ajax_example_menu() {
+ 
+  // Ajax Callback. Returns telephone number for current region.
+  $items['ajax/username'] = array(
+    'title' => 'Get Current User Name',
+    'page callback' => 'ajax_example_get_username',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+ 
+  return $items;
+}
+
+/**
+ * AJAX function that returns the current logged in users name.
+ */
+function ajax_example_get_username() {
+ 
+  // Get currently logged in user.
+  global $user;
+  $user_name = $user->name;
+ 
+  // Drupal 7 New School.
+  drupal_json_output($user_name);
+ 
+  exit();
+}
+
+/**
+ * Implementation of hook_init().
+ */
+function ajax_example_init() {
+ 
+  // Drupal 6: Add our own CSS and JS to the site.
+  drupal_add_js(drupal_get_path('module', 'ajax_example') . '/ajax_example.js');
+ 
+  // Drupal 7: Add our own CSS and JS to the site.
+  drupal_add_js(drupal_get_path('module', 'ajax_example') . '/ajax_example.js', array('scope' => 'footer'));
+}
