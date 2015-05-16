@@ -35,7 +35,7 @@ Drupal.behaviors.my_custom_behavior = {
       $( ".land" ).mouseover(function(event) {
         $(this).mousemove(function( event ) {
           $('.tooltip-show').add();
-          $('.tooltip-show').css({'top':event.pageY-50,'left':event.pageX-50, 'position':'absolute', 'border':'1px solid black', 'padding':'5px'});
+          $('.tooltip-show').css({'top':event.pageY-50,'left':event.pageX-50, 'position':'absolute', 'border':'1px solid black', 'padding':'5px', 'background':'rgba(255,255,255,0.6)'});
           $('.tooltip-show').show();
         });
         $('.tooltip-show').append($(this).attr("title"));
@@ -46,12 +46,12 @@ Drupal.behaviors.my_custom_behavior = {
       });
       $('.land').click(function() {
         var nid = $(this).attr('id');
-        console.log(nid);
+        //console.log(nid);
         $.ajax({
             url: 'ajax/' + nid,
             success: function(data) {
-                console.log(data);
-                $("#yield-table-body").html(data);
+                //console.log(data);
+                $(".st-menu").html(data[1]['data']);
             }
         }); 
         $('.tooltip-show').hide();
@@ -61,13 +61,23 @@ Drupal.behaviors.my_custom_behavior = {
           $(container).addClass('st-menu-open');
         }, 25 );
       });
+      $('.map-link ').click(function() {
+        var nid = $(this).attr('id');
+        //console.log(nid);
+        $.ajax({
+            url: 'ajax-map/' + nid,
+            success: function(data) {
+                console.log(data[1]['data']);
+                $(".ajax-loaded-maps").html(data[1]['data']);
+            }
+        }); 
+      });
+
       $('#st-container').click(function() {
         if ($(this).hasClass('st-effect-2 st-menu-open')) {
             $(this).removeClass('st-effect-2 st-menu-open');
           }
       });
-      
-
       $('#graph').click(function(e) {
         return false;
       });

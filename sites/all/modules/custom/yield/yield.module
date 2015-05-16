@@ -10,6 +10,14 @@ function yield_menu() {
     'delivery callback' => 'ajax_deliver',
     'access arguments'  => array('access content'),
   );
+
+  $items['ajax-map/%'] = array(
+    'title'             => 'Ajax callback',
+    'page callback'     => 'get_mounth_maps_by_year',
+    'page arguments'    => array(1),
+    'delivery callback' => 'ajax_deliver',
+    'access arguments'  => array('access content'),
+  );
   return $items;
 }
 
@@ -274,116 +282,193 @@ function get_region_table_from_db_by_map_land_id($land_id) {
     case 'UA-43':
       $arr['table'] = 'field_data_field_ar_krym';
       $arr['field'] = 'field_ar_krym_value';
+      $arr['region'] = 'АР Крим';
     break;
     case 'UA-71':
       $arr['table'] = 'field_data_field_cherkas_ka';
       $arr['field'] = 'field_cherkas_ka_value';
+      $arr['region'] = 'Черкаська';
     break;
     case 'UA-74':
       $arr['table'] = 'field_data_field_chernihivs_ka';
       $arr['field'] = 'field_chernihivs_ka_value';
+      $arr['region'] = 'Чернігівська';
     break;
     case 'UA-77':
       $arr['table'] = 'field_data_field_chernivets_ka';
       $arr['field'] = 'field_chernivets_ka_value';
+      $arr['region'] = 'Чернівецька';
     break;
     case 'UA-12':
       $arr['table'] = 'field_data_field_dnipropetrovs_ka';
       $arr['field'] = 'field_dnipropetrovs_ka_value';
+      $arr['region'] = 'Дніпропетровська';
     break;
     case 'UA-14':
       $arr['table'] = 'field_data_field_donets_ka';
       $arr['field'] = 'field_donets_ka_value';
+      $arr['region'] = 'Донецька';
     break;
     case 'UA-26':
       $arr['table'] = 'field_data_field_ivano_frankivs_ka';
       $arr['field'] = 'field_ivano_frankivs_ka_value';
+      $arr['region'] = 'Івано-Франківська';
     break;
     case 'UA-63':
       $arr['table'] = 'field_data_field_kharkivs_ka';
       $arr['field'] = 'field_kharkivs_ka_value';
+      $arr['region'] = 'Харківська';
     break;
     case 'UA-65':
       $arr['table'] = 'field_data_field_khersons_ka';
       $arr['field'] = 'field_khersons_ka_value';
+      $arr['region'] = 'Херсонська';
     break;
     case 'UA-68':
       $arr['table'] = 'field_data_field_khmel_nyts_ka';
       $arr['field'] = 'field_khmel_nyts_ka_value';
+      $arr['region'] = 'Хмельницька';
     break;
     case 'UA-35':
       $arr['table'] = 'field_data_field_kirovohrads_ka';
       $arr['field'] = 'field_kirovohrads_ka_value';
+      $arr['region'] = 'Кіровоградська';
     break;
     case 'UA-32':
       $arr['table'] = 'field_data_field_kyivs_ka';
       $arr['field'] = 'field_kyivs_ka_value';
+      $arr['region'] = 'Київська';
     break;
     case 'UA-09':
       $arr['table'] = 'field_data_field_luhans_ka';
       $arr['field'] = 'field_luhans_ka_value';
+      $arr['region'] = 'Луганська';
     break;
     case 'UA-46':
       $arr['table'] = 'field_data_field_l_vivs_ka';
       $arr['field'] = 'field_l_vivs_ka_value';
+      $arr['region'] = 'Львівська';
     break;
     case 'UA-48':
       $arr['table'] = 'field_data_field_mykolaivs_ka';
       $arr['field'] = 'field_mykolaivs_ka_value';
+      $arr['region'] = 'Миколаївська';
     break;
     case 'UA-51':
       $arr['table'] = 'field_data_field_odes_ka';
       $arr['field'] = 'field_odes_ka_value';
+      $arr['region'] = 'Одеська';
     break;
     case 'UA-53':
       $arr['table'] = 'field_data_field_poltavs_ka';
       $arr['field'] = 'field_poltavs_ka_value';
+      $arr['region'] = 'Полтавська';
     break;
     case 'UA-56':
       $arr['table'] = 'field_data_field_rivnens_ka';
       $arr['field'] = 'field_rivnens_ka_value';
+      $arr['region'] = 'Рівненська';
     break;
     case 'UA-59':
       $arr['table'] = 'field_data_field_sums_ka';
       $arr['field'] = 'field_sums_ka_value';
+      $arr['region'] = 'Сумська';
     break;
     case 'UA-61':
       $arr['table'] = 'field_data_field_ternopil_s_ka';
       $arr['field'] = 'field_ternopil_s_ka_value';
+      $arr['region'] = 'Тернопільська';
     break;
     case 'UA-05':
       $arr['table'] = 'field_data_field_vinnyts_ka';
       $arr['field'] = 'field_vinnyts_ka_value';
+      $arr['region'] = 'Вінницька';
     break;
     case 'UA-07':
       $arr['table'] = 'field_data_field_volyns_ka';
       $arr['field'] = 'field_volyns_ka_value';
+      $arr['region'] = 'Волинська';
     break;
     case 'UA-21':
       $arr['table'] = 'field_data_field_zakarpats_ka';
       $arr['field'] = 'field_zakarpats_ka_value';
+      $arr['region'] = 'Закарпатська';
     break;
     case 'UA-23':
       $arr['table'] = 'field_data_field_zaporiz_ka';
       $arr['field'] = 'field_zaporiz_ka_value';
+      $arr['region'] = 'Запорізька';
     break;
     case 'UA-18':
       $arr['table'] = 'field_data_field_zhytomyrs_ka';
       $arr['field'] = 'field_zhytomyrs_ka_value';
+      $arr['region'] = 'Житомирська';
     break;
     
     default:
       $arr['table'] = 'field_data_field_ukraine';
       $arr['field'] = 'field_ukraine_value';
+      $arr['region'] = 'Україна';
     break;
   }
-
   $data = get_yield_by_region($arr['table'], $arr['field']);
-  $tbody = '';
+  $tbody = '<h3>'.$arr['region'].'</h3>';
+  $tbody .='<table>
+        <thead>
+          <tr><th>Рік</th><th>Урожайність</th></tr>
+        </thead>
+        <tbody id="yield-table-body">';
+
   foreach ($data as $key => $value) {
    $tbody .=  '<tr><td>'.$value['year'].'</td><td>'.$value['yield'].'</td></tr>';
   } 
-  $tbody .= '<tr><td>2014</td><td><a href="javascript:void(0);">ПРОГНОЗ</a></td></tr>';
-
+  $tbody .= '<tr><td>2014</td><td><a href="javascript:void(0);">ПРОГНОЗ</a></td></tr>
+  </tbody>
+      </table>';
   return $tbody;
+}
+
+
+function get_mounth_maps_by_year($y) {
+  $year = $y;
+  $string = '<h2>'.$year.'</h2>';
+  $string.='<ul class="tabs">
+    <li>
+        <input type="radio" name="tabs" id="tab1" checked />
+        <label for="tab1">Квітень</label>
+        <div id="tab-content1" class="tab-content">
+          <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+        </div>
+    </li>
+  
+    <li>
+        <input type="radio" name="tabs" id="tab2" />
+        <label for="tab2">Травень</label>
+        <div id="tab-content2" class="tab-content">
+          <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla?</p>
+        </div>
+    </li>
+    <li>
+        <input type="radio" name="tabs" id="tab3" />
+        <label for="tab3">Червень</label>
+        <div id="tab-content3" class="tab-content">
+          <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla?</p>
+        </div>
+    </li>
+    <li>
+        <input type="radio" name="tabs" id="tab4" />
+        <label for="tab4">Вересень</label>
+        <div id="tab-content4" class="tab-content">
+          <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla?</p>
+        </div>
+    </li>
+    <li>
+        <input type="radio" name="tabs" id="tab5" />
+        <label for="tab5">Жовтень</label>
+        <div id="tab-content5" class="tab-content">
+          <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla?</p>
+        </div>
+    </li>
+</ul>';
+  return $string;
 }
