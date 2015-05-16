@@ -570,23 +570,7 @@ body,
 	padding-left: 200px;
 }
 
-.st-menu table {
-	margin: 0;
-	font-size: 18px;
-  line-height: 22px;
-  width: 100%;
-}
 
-
-.st-menu table {
-    border-collapse: collapse;
-    margin-bottom: 3em;
-    width: 100%;
-    background: #fff;
-  font-size: 18px;
-  line-height: 22px;
-  width: 100%;
-}
 .st-menu td {
     padding: 0.05em 1.5em;
     text-align: center;
