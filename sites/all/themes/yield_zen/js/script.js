@@ -32,7 +32,8 @@ Drupal.behaviors.my_custom_behavior = {
     $(document).ready(function() {
       $('.tooltip-show').add();
       $('.tooltip-show').hide();
-      $( ".land" ).mouseover(function(event) {
+      $( ".st-content .land" ).mouseover(function(event) {
+        $(this).css({'fill':'#ccc'});
         $(this).mousemove(function( event ) {
           $('.tooltip-show').add();
           $('.tooltip-show').css({'top':event.pageY-50,'left':event.pageX-50, 'position':'absolute', 'border':'1px solid black', 'padding':'5px'});
@@ -41,13 +42,14 @@ Drupal.behaviors.my_custom_behavior = {
         });
         $('.tooltip-show').append($(this).attr("title"));
       });
-      $('.land').mouseout(function() {
-            $('.tooltip-show').hide();
-            $('.tooltip-show').empty();
-      });
-      $('.land').click(function() {
+      $('.st-content .land').mouseout(function() {
+        $(this).css({'fill':'#beeb9f'});
         $('.tooltip-show').hide();
-        var container = document.getElementById( 'st-container' );
+        $('.tooltip-show').empty();
+      });
+      $('.st-content .land').click(function() {
+        $(this).css({'fill':'#ccc'});
+        var container = document.getElementById( 'st-container');
         $(container).addClass('st-effect-2');
         setTimeout( function() {
           $(container).addClass('st-menu-open');
@@ -58,7 +60,7 @@ Drupal.behaviors.my_custom_behavior = {
             $(this).removeClass('st-effect-2 st-menu-open');
           }
       });
-      
+
 
       $('#graph').click(function(e) {
         return false;
