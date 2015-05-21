@@ -153,4 +153,3 @@ function yield_common_custom_theme() {
   return array($custom_theme);
 }
 
-

@@ -32,36 +32,55 @@ Drupal.behaviors.my_custom_behavior = {
     $(document).ready(function() {
       $('.tooltip-show').add();
       $('.tooltip-show').hide();
-      $( ".st-content .land" ).mouseover(function(event) {
-        $(this).css({'fill':'#ccc'});
+      $( ".page-map .land" ).mouseover(function(event) {
         $(this).mousemove(function( event ) {
+          $(this).css({'fill':'#ccc'})
           $('.tooltip-show').add();
-          $('.tooltip-show').css({'top':event.pageY-50,'left':event.pageX-50, 'position':'absolute', 'border':'1px solid black', 'padding':'5px'});
+          $('.tooltip-show').css({'top':event.pageY-50,'left':event.pageX-50, 'position':'absolute', 'border':'1px solid black', 'padding':'5px', 'background':'rgba(255,255,255,0.6)'});
           $('.tooltip-show').show();
-
         });
         $('.tooltip-show').append($(this).attr("title"));
       });
-      $('.st-content .land').mouseout(function() {
-        $(this).css({'fill':'#beeb9f'});
-        $('.tooltip-show').hide();
-        $('.tooltip-show').empty();
+      $('.page-map .land').mouseout(function() {
+            $(this).css({'fill':'#beeb9f'});
+            $('.tooltip-show').hide();
+            $('.tooltip-show').empty();
       });
-      $('.st-content .land').click(function() {
+      $('.page-map .land').click(function() {
         $(this).css({'fill':'#ccc'});
-        var container = document.getElementById( 'st-container');
+        var nid = $(this).attr('id');
+        //console.log(nid);
+        $.ajax({
+            url: 'ajax/' + nid,
+            success: function(data) {
+                //console.log(data);
+                $(".st-menu").html(data[1]['data']);
+            }
+        });
+        $('.tooltip-show').hide();
+        var container = document.getElementById( 'st-container' );
         $(container).addClass('st-effect-2');
         setTimeout( function() {
           $(container).addClass('st-menu-open');
         }, 25 );
       });
+      $('.map-link ').click(function() {
+        var nid = $(this).attr('id');
+        //console.log(nid);
+        $.ajax({
+            url: 'ajax-map/' + nid,
+            success: function(data) {
+                console.log(data[1]['data']);
+                $(".ajax-loaded-maps").html(data[1]['data']);
+            }
+        });
+      });
+
       $('#st-container').click(function() {
         if ($(this).hasClass('st-effect-2 st-menu-open')) {
             $(this).removeClass('st-effect-2 st-menu-open');
           }
       });
-
-
       $('#graph').click(function(e) {
         return false;
       });
@@ -71,6 +90,5 @@ Drupal.behaviors.my_custom_behavior = {
 
   }
 };
-
 
 })(jQuery, Drupal, this, this.document);
