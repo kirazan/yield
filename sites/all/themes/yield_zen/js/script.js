@@ -30,6 +30,9 @@ Drupal.behaviors.my_custom_behavior = {
     });
 
     $(document).ready(function() {
+      if($('.ajax-loaded-maps h2').text() == '1992'){
+        $('.map-link').first().addClass('active');
+      }
       $('.tooltip-show').add();
       $('.tooltip-show').hide();
       $( ".page-map .land" ).mouseover(function(event) {
@@ -42,9 +45,9 @@ Drupal.behaviors.my_custom_behavior = {
         $('.tooltip-show').append($(this).attr("title"));
       });
       $('.page-map .land').mouseout(function() {
-            $(this).css({'fill':'#beeb9f'});
-            $('.tooltip-show').hide();
-            $('.tooltip-show').empty();
+        $(this).css({'fill':'#beeb9f'});
+        $('.tooltip-show').hide();
+        $('.tooltip-show').empty();
       });
       $('.page-map .land').click(function() {
         $(this).css({'fill':'#ccc'});
@@ -56,7 +59,7 @@ Drupal.behaviors.my_custom_behavior = {
                 //console.log(data);
                 $(".st-menu").html(data[1]['data']);
             }
-        });
+        }); 
         $('.tooltip-show').hide();
         var container = document.getElementById( 'st-container' );
         $(container).addClass('st-effect-2');
@@ -64,16 +67,19 @@ Drupal.behaviors.my_custom_behavior = {
           $(container).addClass('st-menu-open');
         }, 25 );
       });
-      $('.map-link ').click(function() {
+      $('.map-link').click(function() {
+        $('.map-link').removeClass('active');
+        $(this).addClass('active');
         var nid = $(this).attr('id');
         //console.log(nid);
+        $('.ajax-loaded-maps .preloader').addClass('active');
         $.ajax({
             url: 'ajax-map/' + nid,
             success: function(data) {
-                console.log(data[1]['data']);
+                //console.log(data[1]['data']);
                 $(".ajax-loaded-maps").html(data[1]['data']);
             }
-        });
+        }); 
       });
 
       $('#st-container').click(function() {
