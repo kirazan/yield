@@ -54,37 +54,7 @@
   $yield['field_field_zakarpats_ka'] = $row->field_field_zakarpats_ka[0]['raw']['value'];
   $yield['field_field_zaporiz_ka'] = $row->field_field_zaporiz_ka[0]['raw']['value'];
   $yield['field_field_zhytomyrs_ka'] = $row->field_field_zhytomyrs_ka[0]['raw']['value'];
-  $min = min($yield);
-  $max = max($yield);
-  $diff = $max - $min;
-  $section = $diff / 5;
-  $section = ceil($section);
-  $sec1 = $min + $section;
-  $sec2 = $sec1 + $section;
-  $sec3 = $sec2 + $section;
-  $sec4 = $sec3 + $section;
- foreach ($yield as $key => $value) {
-    if($value >= $min && $value <= $sec1){
-      $mass[$key]['color'] = '#E5EB0B';
-      $mass[$key]['value'] = $value;
-    }
-    if($value > $sec1 && $value <= $sec2){
-      $mass[$key]['color'] = '#B9D40B';
-      $mass[$key]['value'] = $value;
-    }
-    if($value > $sec2 && $value <= $sec3){
-      $mass[$key]['color'] = '#70AF1A';
-      $mass[$key]['value'] = $value;
-    }
-    if($value > $sec3 && $value <= $sec4){
-      $mass[$key]['color'] = '#097609';
-      $mass[$key]['value'] = $value;
-    }
-    if($value > $sec4 && $value <= $max){
-      $mass[$key]['color'] = '#075807';
-      $mass[$key]['value'] = $value;
-    }
-  }
+  $mass = yield_get_colored_array($yield, 'green');
   $map = create_svg_ukraine_map($mass);
 ?>
 <div class="ukraine-map-svg-wrapp">

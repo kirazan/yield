@@ -539,3 +539,18 @@ p.link a:hover {
 .view-weather-space-differentiation .ajax-loaded-maps h2 {
   text-align: right;
 }
+
+.left_temp {
+  float: left;
+}
+
+.map-link.active {
+  text-decoration: underline;
+}
+
+.ajax-loaded-maps .preloader.active{
+  background-image: url(../images/preloader.gif);
+  height: 30px;
+  width: 30px;
+  float: right;
+}
