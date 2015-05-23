@@ -577,7 +577,7 @@ function get_mounth_maps_by_year($y) {
       $values['rain'][$key2][$key] = $value2['rain'];
     }
   }
-  $data = '<h2><div class="preloader"></div>'.$year.'</h2>';
+  $data = '<div class="yearr">'.$year.'</div><div class="preloader"></div>';
   $data .= '<ul class="tabs">
     <li>
         <input type="radio" name="tabs" id="tab1" checked />
