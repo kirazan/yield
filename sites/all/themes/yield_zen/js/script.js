@@ -30,7 +30,7 @@ Drupal.behaviors.my_custom_behavior = {
     });
 
     $(document).ready(function() {
-      if($('.ajax-loaded-maps h2').text() == '1992'){
+      if($('.ajax-loaded-maps .yearr').text() == '1992'){
         $('.map-link').first().addClass('active');
       }
       $('.tooltip-show').add();
@@ -59,7 +59,7 @@ Drupal.behaviors.my_custom_behavior = {
                 //console.log(data);
                 $(".st-menu").html(data[1]['data']);
             }
-        }); 
+        });
         $('.tooltip-show').hide();
         var container = document.getElementById( 'st-container' );
         $(container).addClass('st-effect-2');
@@ -79,7 +79,7 @@ Drupal.behaviors.my_custom_behavior = {
                 //console.log(data[1]['data']);
                 $(".ajax-loaded-maps").html(data[1]['data']);
             }
-        }); 
+        });
       });
 
       $('#st-container').click(function() {

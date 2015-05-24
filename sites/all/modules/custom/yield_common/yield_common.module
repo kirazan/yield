@@ -17,7 +17,7 @@ function yield_common_menu() {
     'title' => 'yield_common module settings',
     'description' => 'Description of yield_common module settings page',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('inbo_admin_settings'),
+    'page arguments' => array('yield_common_settings'),
     'access arguments' => array('administer site configuration'),
     'type' => MENU_NORMAL_ITEM,
     'file' => 'admin.settings.inc',
