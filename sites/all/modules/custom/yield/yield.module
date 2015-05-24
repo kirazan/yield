@@ -707,7 +707,6 @@ function yield_get_colored_array($arr, $data_type){
   $max = max($data);
   $diff = $max - $min;
   $section = $diff / 5;
-  $section = ceil($section);
   $sec1 = $min + $section;
   $sec2 = $sec1 + $section;
   $sec3 = $sec2 + $section;
