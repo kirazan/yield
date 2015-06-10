@@ -389,7 +389,7 @@ ul.sub-menu #menu-item-593 a:before {
   width: 100%;
   background: #fff;
   font-size: 16px;
-  line-height: 22px;
+  line-height: 21px;
   width: 100%;
   margin-top: 0;
 }
@@ -405,7 +405,7 @@ ul.sub-menu #menu-item-593 a:before {
 }
 .st-menu table tbody tr:last-child:hover {
   background: #48a770;
-} 
+}
 
 .st-menu h3 {
   margin: 0;
@@ -525,7 +525,7 @@ p.link a:hover {
 .view-weather-space-differentiation td {
   padding-bottom: 30px;
   padding-right: 50px;
-  cursor: pointer;  
+  cursor: pointer;
 }
 
 .view-weather-space-differentiation td:last-child {
@@ -646,4 +646,52 @@ p.link a:hover {
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   transform: rotate(-45deg);
+}
+
+table.all-data-table {
+  border: 1px solid #ccc;
+  width: 80%;
+  margin: 0 auto;
+}
+
+table.all-data-table tr {
+  border: 1px solid #ccc;
+}
+
+table.all-data-table td {
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+table.all-data-table thead th {
+  text-align: center;
+}
+
+.pane-yield-all-crop .fieldset-wrapper {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.pane-yield-all-crop label {
+  float: left;
+  margin-right: 20px;
+}
+
+.pane-yield-all-crop select#edit-region {
+  float: left;
+  margin-right: 20px;
+}
+
+.pane-yield-all-crop input#edit-submit {
+  display: inline-block;
+}
+
+.pane-yield-all-crop div#ajax-results {
+  margin: 20px auto;
+}
+
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.5em 0.625em 2em;
 }

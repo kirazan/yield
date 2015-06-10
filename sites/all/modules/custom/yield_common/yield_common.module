@@ -134,6 +134,22 @@ function yield_common_theme() {
     'template' => 'yield-map-render',
   ) + $base;
 
+  $theme['yield_all_crop'] = array(
+    'variables' => array(
+    'all_crop' => NULL,
+    'select' => NULL,
+    ),
+    'template' => 'yield-all-crop',
+  ) + $base;
+
+  $theme['corelation_table'] = array(
+    'variables' => array(
+    'correlation' => NULL,
+    ),
+    'template' => 'corelation-table',
+  ) + $base;
+
+
   return $theme;
 }
 
@@ -153,3 +169,472 @@ function yield_common_custom_theme() {
   return array($custom_theme);
 }
 
+
+function yield_common_set_region_for_crop_capacity_form($form, $form_state){
+  $form = array();
+  $form['name'] = array(
+    '#type' => 'fieldset',
+    '#collapsible' => TRUE, // Added
+    '#collapsed' => FALSE,  // Added
+  );
+  $form['name']['region'] = array(
+       '#type' => 'select',
+       '#title' => t('Виберіть область'),
+       '#options' => array(
+
+
+          527 => t('Вінницька'),
+          550 => t('Чернігівська'),
+          543 => t('Сумська'),
+          535 => t('Київська'),
+          531 => t('Житомирська'),
+          548 => t('Черкаська'),
+          541 => t('Полтавська'),
+
+          528 => t('Волинська'),
+          542 => t('Рівненська'),
+          547 => t('Хмельницька'),
+          544 => t('Тернопільська'),
+          538 => t('Львівська'),
+          534 => t('Івано-Франківська'),
+          549 => t('Чернівецька'),
+
+          545 => t('Харківська'),
+          530 => t('Донецька'),
+          529 => t('Дніпропетровська'),
+          533 => t('Запорізька'),
+          536 => t('Кіровоградська'),
+          546 => t('Херсонська'),
+          539 => t('Миколаївська'),
+          540 => t('Одеська'),
+
+          526 => t('АР Крим'),
+          537 => t('Луганська'),
+          532 => t('Закарпатська'),
+
+          //551 => t('Україна'),
+       ),
+       '#default_value' => 542,
+   );
+
+  $form['name']["submit"] = array(
+    "#type" => "submit",
+    "#value" => "Обрахувати прогноз",
+    "#ajax" => array(
+      "callback" => "get_authors_by_word_in_titles_form_callback",
+      "wrapper" => "ajax-results", "effect" => "fade"
+      )
+  );
+  $form["results"] = array("#markup" => "<div id='ajax-results'></div>");
+
+  return $form;
+}
+
+function get_authors_by_word_in_titles_form_callback($form, $form_state){
+ $reg = $form_state['values']['region'];
+ $reg_name = taxonomy_term_load($reg);
+ $reg_name = $reg_name->name;
+ $yield = get_yield_by_region_tid($reg);
+ $nids = db_select('node', 'n')
+    ->fields('n', array('nid'))
+    ->condition('n.type', 'weather')
+    ->execute()
+    ->fetchCol();
+ $nodes = node_load_multiple($nids);
+$values = array();
+foreach ($nodes as $node) {
+ $year = taxonomy_term_load($node->field_year_weather['und']['0']['tid']);
+ $year = $year->name;
+ foreach ($node->field_region_weather['und'] as $key => $value) {
+    $entity = entity_load('field_collection_item', array($value['value']));
+    $region = $entity[$value['value']]->field_fc_region['und']['0']['tid'];
+    $data[$region] = array();
+    foreach ($entity[$value['value']]->field_fc_weather['und'] as $key => $value2) {
+      $entity2 = entity_load('field_collection_item', array($value2['value']));
+      $month_tid = $entity2[$value2['value']]->field_fc_month['und']['0']['tid'];
+      $month_term = taxonomy_term_load($month_tid);
+      $month = $month_term->name;
+      switch ($month) {
+        case 'April':
+          $temp_col = 't4';
+          $rain_col = 'r4';
+          break;
+        case 'May':
+          $temp_col = 't5';
+          $rain_col = 'r5';
+          break;
+        case 'June':
+          $temp_col = 't6';
+          $rain_col = 'r6';
+          break;
+        case 'September':
+          $temp_col = 't9';
+          $rain_col = 'r9';
+          break;
+        case 'October':
+          $temp_col = 't10';
+          $rain_col = 'r10';
+          break;
+
+        default:
+          $temp_col = 't4';
+          $rain_col = 'r4';
+          break;
+      }
+      $temp = $entity2[$value2['value']]->field_temperature['und']['0']['value'];
+      $rain = $entity2[$value2['value']]->field_rainfall['und']['0']['value'];
+      $data[$region][$temp_col] = $temp;
+      $data[$region][$rain_col] = $rain;
+    }
+  }
+  $values[$year] = $data[$reg];
+ }
+ foreach ($yield as $key => $value) {
+   $values[$key]['yield'] = $value;
+ }
+ $tbody = '';
+  $tbody .='<table class="all-data-table">
+        <thead>
+          <tr><th>Рік</th><th>R4</th><th>R5</th><th>R6</th><th>R9</th><th>R10</th><th>T4</th><th>T5</th><th>T6</th><th>T9</th><th>T10</th><th>Урожайність</th></tr>
+        </thead>
+        <tbody id="yield-table-body">';
+  $new_data = array();
+  foreach ($values as $key => $value) {
+    if(2002 < $key && $key < 2015){
+      $new_data[$key] = $value;
+    }
+    $tbody .=  '<tr><td>'.$key.'</td><td>'.$value['r4'].'</td><td>'.$value['r5'].'</td><td>'.$value['r6'].'</td><td>'.$value['r9'].'</td><td>'.$value['r10'].'</td><td>'.$value['t4'].'</td><td>'.$value['t5'].'</td><td>'.$value['t6'].'</td><td>'.$value['t9'].'</td><td>'.$value['t10'].'</td><td>'.$value['yield'].'</td></tr>';
+  }
+  $correlation = get_correlation_2003_2014($new_data);
+  $tbody .=  '<tr><td>Корелляція 2003-2014</td>';
+  foreach ($correlation as $key => $value) {
+    $color = '';
+    if(abs($value) > 0.5){
+      $color = 'red';
+    }
+    $tbody .= '<td style="color:'.$color.'">'.round($value, 2).'</td>';
+  }
+  global $user;
+  if($user->uid == 1){
+    set_correlation_to_bd_table($correlation, $reg_name);
+  }
+
+  $tbody .= '<td>1</td></tr><tr><td colspan="12"><a href="correl_table">Зведена кореляційна таблиця</a></td></tr>
+
+  </tbody>
+  </table>';
+
+  $string = '<div id="ajax-results">'.$tbody.'</div>';
+
+  return $string;
+}
+
+function set_correlation_to_bd_table($corr, $reg){
+  $count = db_select('correl_coeficients', 'n')
+  ->condition('n.region', $reg, '=')
+  ->countQuery()
+  ->execute()
+  ->fetchField();
+  if($count > 0){
+    foreach ($corr as $key => $value) {
+      db_update('correl_coeficients')
+      ->fields(array('value' => round($value, 2)))
+      ->condition('region', $reg, '=')
+      ->condition('param', $key, '=')
+      ->execute();
+    }
+  }else{
+    foreach ($corr as $key => $value) {
+      $id = db_insert('correl_coeficients')
+      ->fields(array(
+        'region' => $reg,
+        'param' => $key,
+        'value' => round($value, 2),
+      ))
+      ->execute();
+    }
+  }
+  return true;
+}
+
+function get_correlation_2003_2014($new_data){
+  $sumX = 0;
+  $sumX2 = 0;
+  $sumY = 0;
+  $sumY2 = 0;
+  $sumXY = 0;
+  $correl = array();
+  foreach ($new_data as $key => $value) {
+    $r4 = $value['r4'];
+    $r5 = $value['r5'];
+    $r6 = $value['r6'];
+    $r9 = $value['r9'];
+    $r10 = $value['r10'];
+
+    $t4 = $value['t4'];
+    $t5 = $value['t5'];
+    $t6 = $value['t6'];
+    $t9 = $value['t9'];
+    $t10 = $value['t10'];
+
+    $y = $value['yield'];
+
+    $sumr4 += $r4;
+    $sumr42 += $r4 * $r4;
+    $sumr5 += $r5;
+    $sumr52 += $r5 * $r5;
+    $sumr6 += $r6;
+    $sumr62 += $r6 * $r6;
+    $sumr9 += $r9;
+    $sumr92 += $r9 * $r9;
+    $sumr10 += $r10;
+    $sumr102 += $r10 * $r10;
+
+    $sumt4 += $t4;
+    $sumt42 += $t4 * $t4;
+    $sumt5 += $t5;
+    $sumt52 += $t5 * $t5;
+    $sumt6 += $t6;
+    $sumt62 += $t6 * $t6;
+    $sumt9 += $t9;
+    $sumt92 += $t9 * $t9;
+    $sumt10 += $t10;
+    $sumt102 += $t10 * $t10;
+
+    $sumY += $y;
+    $sumY2 += $y * $y;
+
+    $sumr4Y += $r4 * $y;
+    $sumr5Y += $r5 * $y;
+    $sumr6Y += $r6 * $y;
+    $sumr9Y += $r9 * $y;
+    $sumr10Y += $r10 * $y;
+    $sumt4Y += $t4 * $y;
+    $sumt5Y += $t5 * $y;
+    $sumt6Y += $t6 * $y;
+    $sumt9Y += $t9 * $y;
+    $sumt10Y += $t10 * $y;
+  }
+  $stdr4 = sqrt($sumr42 / 12 - $sumr4 * $sumr4 / 12 / 12);
+  $stdr5 = sqrt($sumr52 / 12 - $sumr5 * $sumr5 / 12 / 12);
+  $stdr6 = sqrt($sumr62 / 12 - $sumr6 * $sumr6 / 12 / 12);
+  $stdr9 = sqrt($sumr92 / 12 - $sumr9 * $sumr9 / 12 / 12);
+  $stdr10 = sqrt($sumr102 / 12 - $sumr10 * $sumr10 / 12 / 12);
+
+  $stdt4 = sqrt($sumt42 / 12 - $sumt4 * $sumt4 / 12 / 12);
+  $stdt5 = sqrt($sumt52 / 12 - $sumt5 * $sumt5 / 12 / 12);
+  $stdt6 = sqrt($sumt62 / 12 - $sumt6 * $sumt6 / 12 / 12);
+  $stdt9 = sqrt($sumt92 / 12 - $sumt9 * $sumt9 / 12 / 12);
+  $stdt10 = sqrt($sumt102 / 12 - $sumt10 * $sumt10 / 12 / 12);
+
+  $stdY = sqrt($sumY2 / 12 - $sumY * $sumY / 12 / 12);
+
+  $covariancer4 = ($sumr4Y / 12 - $sumr4 * $sumY / 12 / 12);
+  $correlationr4 = $covariancer4 / $stdr4 / $stdY;
+  $covariancer5 = ($sumr5Y / 12 - $sumr5 * $sumY / 12 / 12);
+  $correlationr5 = $covariancer5 / $stdr5 / $stdY;
+  $covariancer6 = ($sumr6Y / 12 - $sumr6 * $sumY / 12 / 12);
+  $correlationr6 = $covariancer6 / $stdr6 / $stdY;
+  $covariancer9 = ($sumr9Y / 12 - $sumr9 * $sumY / 12 / 12);
+  $correlationr9 = $covariancer9 / $stdr9 / $stdY;
+  $covariancer10 = ($sumr10Y / 12 - $sumr10 * $sumY / 12 / 12);
+  $correlationr10 = $covariancer10 / $stdr10 / $stdY;
+
+  $covariancet4 = ($sumt4Y / 12 - $sumt4 * $sumY / 12 / 12);
+  $correlationt4 = $covariancet4 / $stdt4 / $stdY;
+  $covariancet5 = ($sumt5Y / 12 - $sumt5 * $sumY / 12 / 12);
+  $correlationt5 = $covariancet5 / $stdt5 / $stdY;
+  $covariancet6 = ($sumt6Y / 12 - $sumt6 * $sumY / 12 / 12);
+  $correlationt6 = $covariancet6 / $stdt6 / $stdY;
+  $covariancet9 = ($sumt9Y / 12 - $sumt9 * $sumY / 12 / 12);
+  $correlationt9 = $covariancet9 / $stdt9 / $stdY;
+  $covariancet10 = ($sumt10Y / 12 - $sumt10 * $sumY / 12 / 12);
+  $correlationt10 = $covariancet10 / $stdt10 / $stdY;
+
+  $correl['r4'] = $correlationr4;
+  $correl['r5'] = $correlationr5;
+  $correl['r6'] = $correlationr6;
+  $correl['r9'] = $correlationr9;
+  $correl['r10'] = $correlationr10;
+
+  $correl['t4'] = $correlationt4;
+  $correl['t5'] = $correlationt5;
+  $correl['t6'] = $correlationt6;
+  $correl['t9'] = $correlationt9;
+  $correl['t10'] = $correlationt10;
+  return $correl;
+}
+
+function get_yield_by_region_tid($region){
+  $id = $region;
+  switch ($id) {
+    case '526':
+      $arr['table'] = 'field_data_field_ar_krym';
+      $arr['field'] = 'field_ar_krym_value';
+      $arr['region'] = 'АР Крим';
+    break;
+    case '548':
+      $arr['table'] = 'field_data_field_cherkas_ka';
+      $arr['field'] = 'field_cherkas_ka_value';
+      $arr['region'] = 'Черкаська';
+    break;
+    case '550':
+      $arr['table'] = 'field_data_field_chernihivs_ka';
+      $arr['field'] = 'field_chernihivs_ka_value';
+      $arr['region'] = 'Чернігівська';
+    break;
+    case '549':
+      $arr['table'] = 'field_data_field_chernivets_ka';
+      $arr['field'] = 'field_chernivets_ka_value';
+      $arr['region'] = 'Чернівецька';
+    break;
+    case '529':
+      $arr['table'] = 'field_data_field_dnipropetrovs_ka';
+      $arr['field'] = 'field_dnipropetrovs_ka_value';
+      $arr['region'] = 'Дніпропетровська';
+    break;
+    case '530':
+      $arr['table'] = 'field_data_field_donets_ka';
+      $arr['field'] = 'field_donets_ka_value';
+      $arr['region'] = 'Донецька';
+    break;
+    case '534':
+      $arr['table'] = 'field_data_field_ivano_frankivs_ka';
+      $arr['field'] = 'field_ivano_frankivs_ka_value';
+      $arr['region'] = 'Івано-Франківська';
+    break;
+    case '545':
+      $arr['table'] = 'field_data_field_kharkivs_ka';
+      $arr['field'] = 'field_kharkivs_ka_value';
+      $arr['region'] = 'Харківська';
+    break;
+    case '546':
+      $arr['table'] = 'field_data_field_khersons_ka';
+      $arr['field'] = 'field_khersons_ka_value';
+      $arr['region'] = 'Херсонська';
+    break;
+    case '547':
+      $arr['table'] = 'field_data_field_khmel_nyts_ka';
+      $arr['field'] = 'field_khmel_nyts_ka_value';
+      $arr['region'] = 'Хмельницька';
+    break;
+    case '536':
+      $arr['table'] = 'field_data_field_kirovohrads_ka';
+      $arr['field'] = 'field_kirovohrads_ka_value';
+      $arr['region'] = 'Кіровоградська';
+    break;
+    case '535':
+      $arr['table'] = 'field_data_field_kyivs_ka';
+      $arr['field'] = 'field_kyivs_ka_value';
+      $arr['region'] = 'Київська';
+    break;
+    case '537':
+      $arr['table'] = 'field_data_field_luhans_ka';
+      $arr['field'] = 'field_luhans_ka_value';
+      $arr['region'] = 'Луганська';
+    break;
+    case '538':
+      $arr['table'] = 'field_data_field_l_vivs_ka';
+      $arr['field'] = 'field_l_vivs_ka_value';
+      $arr['region'] = 'Львівська';
+    break;
+    case '539':
+      $arr['table'] = 'field_data_field_mykolaivs_ka';
+      $arr['field'] = 'field_mykolaivs_ka_value';
+      $arr['region'] = 'Миколаївська';
+    break;
+    case '540':
+      $arr['table'] = 'field_data_field_odes_ka';
+      $arr['field'] = 'field_odes_ka_value';
+      $arr['region'] = 'Одеська';
+    break;
+    case '541':
+      $arr['table'] = 'field_data_field_poltavs_ka';
+      $arr['field'] = 'field_poltavs_ka_value';
+      $arr['region'] = 'Полтавська';
+    break;
+    case '542':
+      $arr['table'] = 'field_data_field_rivnens_ka';
+      $arr['field'] = 'field_rivnens_ka_value';
+      $arr['region'] = 'Рівненська';
+    break;
+    case '543':
+      $arr['table'] = 'field_data_field_sums_ka';
+      $arr['field'] = 'field_sums_ka_value';
+      $arr['region'] = 'Сумська';
+    break;
+    case '544':
+      $arr['table'] = 'field_data_field_ternopil_s_ka';
+      $arr['field'] = 'field_ternopil_s_ka_value';
+      $arr['region'] = 'Тернопільська';
+    break;
+    case '527':
+      $arr['table'] = 'field_data_field_vinnyts_ka';
+      $arr['field'] = 'field_vinnyts_ka_value';
+      $arr['region'] = 'Вінницька';
+    break;
+    case '528':
+      $arr['table'] = 'field_data_field_volyns_ka';
+      $arr['field'] = 'field_volyns_ka_value';
+      $arr['region'] = 'Волинська';
+    break;
+    case '532':
+      $arr['table'] = 'field_data_field_zakarpats_ka';
+      $arr['field'] = 'field_zakarpats_ka_value';
+      $arr['region'] = 'Закарпатська';
+    break;
+    case '533':
+      $arr['table'] = 'field_data_field_zaporiz_ka';
+      $arr['field'] = 'field_zaporiz_ka_value';
+      $arr['region'] = 'Запорізька';
+    break;
+    case '531':
+      $arr['table'] = 'field_data_field_zhytomyrs_ka';
+      $arr['field'] = 'field_zhytomyrs_ka_value';
+      $arr['region'] = 'Житомирська';
+    break;
+    case '551':
+      $arr['table'] = 'field_data_field_ukraine';
+      $arr['field'] = 'field_ukraine_value';
+      $arr['region'] = 'Житомирська';
+    break;
+
+    default:
+      $arr['table'] = 'field_data_field_ukraine';
+      $arr['field'] = 'field_ukraine_value';
+      $arr['region'] = 'Україна';
+    break;
+  }
+  $data = get_yield_by_region_on_years($arr['table'], $arr['field']);
+  return $data;
+}
+
+function get_yield_by_region_on_years($select_table, $select_field) {
+  $table = $select_table;
+  $field = $select_field;
+  $query = db_select('node', 'n');
+  $query->innerJoin($table, 'fdfr', 'n.nid = fdfr.entity_id');
+  $query->innerJoin('field_data_field_year', 'fdfy', 'n.nid = fdfy.entity_id');
+  $query->innerJoin('taxonomy_term_data', 'ttd', 'fdfy.field_year_tid =ttd.tid');
+  $query->fields('ttd', array('name'));
+  $query->addField('fdfr', $field, 'value');
+  $query->orderBy('ttd.name', 'ASC');
+  $result = $query->execute();
+  foreach ($result as $node) {
+    $items[$node->name] = $node->value;
+  }
+  return $items;
+}
+
+
+function get_correlation_table(){
+  $nodes = db_select('correl_coeficients', 'n')
+  ->fields('n', array('region', 'param', 'value'))
+  ->execute()
+  ->fetchAll();
+  $data = array();
+  foreach ($nodes as $key => $value) {
+    $data[$value->region][$value->param] = $value->value;
+  }
+  return $data;
+}
