@@ -30,7 +30,7 @@ function yield_common_corelation_table_content_type_render($subtype, $conf, $pan
    $tbody .=  '<tr><td>'.$key.'</td>';
    foreach ($value as $key2 => $value2) {
       $color = '';
-      if(abs($value2) > 0.5){
+      if(abs($value2) > 0.4){
         $color = 'red';
       }
       $tbody .=  '<td style="color:'.$color.'">'.$value2.'</td>';

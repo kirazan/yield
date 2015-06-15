@@ -695,3 +695,35 @@ fieldset {
   margin: 0 2px;
   padding: 0.5em 0.625em 2em;
 }
+
+.korrel-table-1 {
+  float: left;
+  margin-top: 0;
+  margin-right: 100px;
+}
+
+div#ajax-results-22 img {
+  max-width: 300px;
+}
+
+div#ajax-results-22 {
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.korrel-table-2 {
+  float: left;
+  margin-top: 0;
+  margin-right: 100px;
+}
+
+div#ajax-results-22 td {
+  padding: 0;
+  vertical-align: top;
+  border: 1px solid #ccc;
+}
+
+div#ajax-results-22 table {
+  border: 1px solid #ccc;
+}

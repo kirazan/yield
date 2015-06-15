@@ -168,7 +168,233 @@ function yield_common_custom_theme() {
 	}
   return array($custom_theme);
 }
+function yield_common_process_correlation($form, $form_state){
+  $correlation = $_SESSION['correlation'];
+  foreach ($correlation as $key => $value) {
+    unset($correlation[$key]);
+    $correlation[$key.' | '.round($value,2)] = $key.' | '.round($value,2);
+  }
+  $form = array();
+  $form['name'] = array(
+    '#type' => 'fieldset',
+    '#collapsible' => TRUE, // Added
+    '#collapsed' => FALSE,  // Added
+  );
+  $form['name']['factor'] = array(
+       '#type' => 'select',
+       '#title' => t('Виберіть фактор для побудови парної регресії і обрахунку моделі урожайності'),
+       '#options' => $correlation,
+       '#default_value' => 542,
+   );
 
+  $form['name']["submit"] = array(
+    "#type" => "submit",
+    "#value" => "Обрахувати прогноз",
+    "#ajax" => array(
+      "callback" => "get_authors_by_word_in_titles22_form_callback",
+      "wrapper" => "ajax-results-22", "effect" => "fade"
+      )
+  );
+  $form["results"] = array("#markup" => "<div id='ajax-results-22'></div>");
+  return $form;
+}
+function get_authors_by_word_in_titles22_form_callback($form, $form_state){
+  $factor = $form_state['input']['factor'];
+  $data = explode(' | ', $factor);
+  $factor = $data[0];
+  $value = $data[1];
+  $values = $_SESSION['data_values'];
+  $all_values = $_SESSION['all_values'];
+  $koef = process_data_to_get_coef($values, $factor);
+  //print_r($koef);
+  $tbody = '<h3>Розрахунки урожайності</h3>';
+  $popdata = array(
+    // Africa, Asia, Europe, Latin America, North America, Oceania
+    '1750' => array(106, 502, 163, 16, 2, 2),
+    '1800' => array(107, 635, 203, 24, 7, 2),
+    '1850' => array(111, 809, 276, 38, 26, 2),
+    '1900' => array(133, 947, 408, 74, 82, 6),
+    '1950' => array(211, 1398, 547, 167, 172, 12.8),
+    '2000' => array(796, 3680, 728, 520, 316, 31),
+  );
+  $output = array();
+
+  $output[] = '<h4>' . t('Графік урожайності') . '</h4>';
+
+
+  $x_axis = array_keys($all_values);
+  $y_axis = array();
+  foreach ($all_values as $year) {
+    foreach ($year as $key => $country) {
+      if($key == 'yield'){
+        $y_axis[] = $country;
+      }
+
+    }
+  }
+  $output[] = theme('graphael', array(
+    'method' => 'line',
+    'values' => array($x_axis, $y_axis),
+    'params' => array(
+      'opts' => array(
+        'axis' => "0 0 1 1",
+        'gutter' => 0,
+        'axisxstep' => 22,
+        'axisystep' => 22,
+      )),
+    'extend' => array(
+      'label' => array(
+        'params' => array('attrText' => array(
+          'fill' =>  '#aaa',
+          'font' => '10px Arial, sans-serif',
+        )),
+      ),
+    ),
+    'attr' => array(
+      'style' => 'height: 500px;width:100%;',
+    ),
+  ));
+  $tbody .= join($output);
+  $tbody .='<div class="all-tables"><table class="korrel-table-1">
+        <thead>
+          <tr><th>Параметр</th><th>Значення</th></tr>
+        </thead>
+        <tbody id="korrel-table-1">';
+  $tbody .=  '<tr><td class="koef-regr">Коефіціенти парної лінійної регресії <br><img src="'.base_path().path_to_theme().'/formula/koef_parn_lin_regr.png"></td><td>b<sub>1</sub>='.$koef['b1'].'<br>b<sub>0</sub>='.$koef['b0'].'</td></tr>';
+  $tbody .=  '<tr><td class="koef-korel">Коефіціент кореляції<br><img src="'.base_path().path_to_theme().'/formula/koef_korrel.png"></td><td>r<sub>xy</sub>='.$koef['rxy'].'</td></tr>';
+  $tbody .=  '<tr><td class="koef-determ">Коефіціент детермінації<br><img src="'.base_path().path_to_theme().'/formula/koef_determ.png"><br></td><td>R<sup>2</sup>='.$koef['r2'].'</td></tr>';
+  $tbody .=  '<tr><td class="dysp-vyp-vidh">Дисперсія випадкових відхилень<br><img src="'.base_path().path_to_theme().'/formula/lysp_vup_vidh.png"></td><td>S<sup>2</sup>='.$koef['s2'].'</td></tr>';
+  $tbody .=  '<tr><td class="st-poh-koef-regr">Стандартні помилки коефіціентів регресії<br><img src="'.base_path().path_to_theme().'/formula/st_pom_b1.png"><img src="'.base_path().path_to_theme().'/formula/st_pom_b0.png"></td><td>S<sub>b<sub>1</sub></sub>='.$koef['sb1'].'<br>S<sub>b<sub>0</sub></sub>='.$koef['sb0'].'</td></tr>';
+  $tbody .= '
+  </tbody>
+      </table>';
+  $tbody .='<table class="korrel-table-2">
+        <thead>
+          <tr><th>Параметр</th><th>Значення</th></tr>
+        </thead>
+        <tbody id="korrel-table-2">';
+  $tbody .=  '<tr><td class="t-stat">t- статистика<br><img src="'.base_path().path_to_theme().'/formula/tstat_b1.png"><br><img src="'.base_path().path_to_theme().'/formula/tstat_b0.png"><br><img src="'.base_path().path_to_theme().'/formula/tkr.png"></td><td>t<sub>b<sub>1</sub></sub>='.$koef['tb1'].'<br>t<sub>b<sub>0</sub></sub>='.$koef['tb0'].'<br>t<sub>kr</sub>=2.228</td></tr>';
+  $tbody .=  '<tr><td class="f-stat">F-статистика<br><img src="'.base_path().path_to_theme().'/formula/fstat.png"><br><img src="'.base_path().path_to_theme().'/formula/fkr.png"></td><td>F='.$koef['F'].'<br>F<sub>kr</sub>=4.96</td></tr>';
+  $tbody .= '
+  </tbody>
+      </table>';
+
+  $tbody .= '
+    <table class="korrel-table-3">
+        <thead>
+          <tr><th>Параметр</th><th>Значення</th></tr>
+        </thead>
+        <tbody id="korrel-table-3">';
+  $t = 2.228;
+  if(abs($koef['tb1']) > $t && abs($koef['tb0']) > $t){
+    $tbody .=  '<tr><td class="model-1">Прогноз урожайності на 2014 за рівнянням<br><img src="'.base_path().path_to_theme().'/formula/rivn_parn_lin_regr.png"></td><td>Y<sub>2014</sub>='.$koef['urozh2014'].'</td></tr>';
+    $tbody .=  '<tr><td class="pohybka">Похибка розрахунків<br><img src="'.base_path().path_to_theme().'/formula/pohybka.png"></td><td>y<sup>*</sup>='.$koef['e'].'%</td></tr>';
+    $tbody .=  '<tr><td class="pohybka">Значення фактора на 2015 рік</td><td>'.$factor.'='.$koef['x2015'].'</td></tr>';
+    $tbody .=  '<tr><td class="pohybka">Прогноз урожайності на 2015 рік</td><td>Y='.$koef['urozh2015'].'</td></tr>';
+    $urozh2015 = $b0 + $b1 * $x2015;
+  }
+  if(abs($koef['tb1']) > $t && abs($koef['tb0']) < $t){
+    $tbody .=  '<tr><td class="model-2">Прогноз урожайності на 2014 за рівнянням<br><img src="'.base_path().path_to_theme().'/formula/rivn_parn_lin_regr_1_ch.png"></td><td>Y<sub>2014</sub>='.$koef['urozh2014'].'</td></tr>';
+    $tbody .=  '<tr><td class="pohybka">Похибка розрахунків<br><img src="'.base_path().path_to_theme().'/formula/pohybka.png"></td><td>y<sup>*</sup>='.$koef['e'].'%</td></tr>';
+    $tbody .=  '<tr><td class="pohybka">Значення фактора на 2015 рік</td><td>'.$factor.'='.$koef['x2015'].'</td></tr>';
+    $tbody .=  '<tr><td class="pohybka">Прогноз урожайності на 2015 рік</td><td>Y='.$koef['urozh2015'].'</td></tr>';
+  }
+  if(abs($koef['tb1']) < $t && abs($koef['tb0']) < $t || abs($koef['tb1']) < $t && abs($koef['tb0']) > $t){
+    $tbody .=  '<tr><td class="model-2">Прогноз урожайності на 2014 за рівнянням неможливий, оскільки не виконуються умови перевірки</td><td>Y<sub>2014</sub>='.$koef['urozh2014'].'</td></tr>';
+  }
+  $tbody .= '</tbody>
+      </table></div>';
+
+  $string = '<div id="ajax-results-22">'.$tbody.'</div>';
+
+  return $string;
+}
+
+function process_data_to_get_coef($data, $factor){
+  $new_data = $data;
+  $koef = array();
+  foreach ($new_data as $key => $value) {
+    $x = $value[$factor];
+    $y = $value['yield'];
+    $sumX += $x;
+    $sumX2 += $x * $x;
+    $sumY += $y;
+    $sumY2 += $y * $y;
+    $sumXY += $x * $y;
+  }
+  $srX = $sumX / 12;
+  $srY = $sumY / 12;
+  $srY2 = $sumY2 / 12;
+  $srXY = $sumXY / 12;
+  $srX2 = $sumX2 / 12;
+  $b1 = ($srXY - $srX * $srY) / ($srX2 - $srX * $srX);
+  $b0 = $srY - $b1 * $srX;
+  $rxy = ($srXY - $srX* $srY)/(sqrt($srX2 - $srX * $srX)*sqrt($srY2 - $srY * $srY));
+
+  foreach ($new_data as $key => $value) {
+    $x = $value[$factor];
+    $y = $value['yield'];
+    $yzd = $b0 + $b1 * $x;
+    $sumYzd += $yzd;
+    $ei = $y - $yzd;
+    $ei2 = $ei * $ei;
+    $sumei += $ei;
+    $sumei2 += $ei2;
+    $xminxsr = $x - $srX;
+    $sumxminxsr += $xminxsr;
+    $xminxsr2 = $xminxsr * $xminxsr;
+    $sumxminxsr2 += $xminxsr2;
+    $yminysr = $y - $srY;
+    $sumyminysr += $yminysr;
+    $yminysr2 = $yminysr * $yminysr;
+    $sumyminysr2 +=$yminysr2;
+  }
+
+  $s2 = $sumei2 / 10;
+  $s2b1 = $s2 / $sumxminxsr2;
+  $s2b0 = $srX2 * $s2b1;
+  $sb1 = sqrt($s2b1);
+  $sb0 = sqrt($s2b0);
+  $r2 = $rxy * $rxy;
+  $tb1 = $b1 / $sb1;
+  $tb0 = $b0 / $sb0;
+  $F = ($r2 / (1 - $r2)) * 10;
+  $t = 2.28;
+  $f = 4.96;
+
+  if(abs($tb1) > $t && abs($tb0) > $t){
+    $urozh2014 = $b0 + $b1 * $new_data[2014][$factor];
+    $e = (abs($new_data[2014]['yield'] - $urozh2014) / $new_data[2014]['yield']) * 100;
+    $x2015 = ($new_data[2014][$factor] + $new_data[2013][$factor] + $new_data[2012][$factor]) / 3;
+    $urozh2015 = $b0 + $b1 * $x2015;
+  }
+  if(abs($tb1) > $t && abs($tb0) < $t){
+    $urozh2014 = $b1 * $new_data[2014][$factor];
+    $e = (abs($new_data[2014]['yield'] - $urozh2014) / $new_data[2014]['yield']) * 100;
+    $x2015 = ($new_data[2014][$factor] + $new_data[2013][$factor] + $new_data[2012][$factor]) / 3;
+    $urozh2015 = $b1 * $x2015;
+  }
+
+  $koef = array(
+    'b1' => round($b1, 3),
+    'b0' =>  round($b0, 3),
+    'rxy' =>  round($rxy, 3),
+    'urozh2014' =>  round($urozh2014, 3),
+    'F' =>  round($F, 3),
+    'e' =>  round($e, 3),
+    'tb1' =>  round($tb1, 3),
+    'tb0' =>  round($tb0, 3),
+    'r2' =>  round($r2, 3),
+    'x2015' =>  round($x2015, 3),
+    'urozh2015' =>  round($urozh2015, 3),
+    's2' =>  round($s2, 3),
+    'sb1' =>  round($sb1, 3),
+    'sb0' =>  round($sb0, 3),
+
+  );
+
+  return $koef;
+}
 
 function yield_common_set_region_for_crop_capacity_form($form, $form_state){
   $form = array();
@@ -292,6 +518,7 @@ foreach ($nodes as $node) {
  foreach ($yield as $key => $value) {
    $values[$key]['yield'] = $value;
  }
+
  $tbody = '';
   $tbody .='<table class="all-data-table">
         <thead>
@@ -305,11 +532,17 @@ foreach ($nodes as $node) {
     }
     $tbody .=  '<tr><td>'.$key.'</td><td>'.$value['r4'].'</td><td>'.$value['r5'].'</td><td>'.$value['r6'].'</td><td>'.$value['r9'].'</td><td>'.$value['r10'].'</td><td>'.$value['t4'].'</td><td>'.$value['t5'].'</td><td>'.$value['t6'].'</td><td>'.$value['t9'].'</td><td>'.$value['t10'].'</td><td>'.$value['yield'].'</td></tr>';
   }
+  $_SESSION['data_values'] = array();
+  $_SESSION['data_values'] = $new_data;
+  $_SESSION['all_values'] = array();
+  $_SESSION['all_values'] = $values;
   $correlation = get_correlation_2003_2014($new_data);
+  $_SESSION['correlation'] = array();
+  $_SESSION['correlation'] = $correlation;
   $tbody .=  '<tr><td>Корелляція 2003-2014</td>';
   foreach ($correlation as $key => $value) {
     $color = '';
-    if(abs($value) > 0.5){
+    if(abs($value) > 0.4){
       $color = 'red';
     }
     $tbody .= '<td style="color:'.$color.'">'.round($value, 2).'</td>';
@@ -323,8 +556,10 @@ foreach ($nodes as $node) {
 
   </tbody>
   </table>';
+  $form = drupal_get_form('yield_common_process_correlation');
+  $select_form = drupal_render($form);
 
-  $string = '<div id="ajax-results">'.$tbody.'</div>';
+  $string = '<div id="ajax-results">'.$tbody.$select_form.'</div>';
 
   return $string;
 }
@@ -358,11 +593,6 @@ function set_correlation_to_bd_table($corr, $reg){
 }
 
 function get_correlation_2003_2014($new_data){
-  $sumX = 0;
-  $sumX2 = 0;
-  $sumY = 0;
-  $sumY2 = 0;
-  $sumXY = 0;
   $correl = array();
   foreach ($new_data as $key => $value) {
     $r4 = $value['r4'];
